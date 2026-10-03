@@ -1,0 +1,12 @@
+id,requirement,result,status
+R1,Deploy fast,4.6 min estimated from alarm to first probe line,Met on paper; timed drills at TRL 4
+R2,Probe depth,"Central debris: one person 2.6 m, two 2.6 m; stiff debris: one 0.0 m, two 1.8 m",At risk
+R3,Crawl board support,Sinkage 44 mm; bridges a 0.8 m void at 4.0 MPa,Met on paper
+R4,Capstan pull,"Pin releases at 6374 N (5099 to 7648 N); 114 N each for four people at 5,000 N",Met on paper
+R5,Casualty transport,"Debris level 510 N: 127 N each for four, 255 N each for two; boards 153 N each for two",Met with four haulers; at risk with two on debris
+R6,Stop rule understood,Stop rule printed on the lid and pocket cards,Not verifiable at TRL 3
+R7,Storage life,"Exterior plywood, painted or galvanised steel, UV-stabilised HDPE, alkaline cells stored out",Met on paper by material choice; inspection at TRL 4
+R8,Portable,Heaviest item 21.2 kg; whole carried kit 151 kg (37.8 kg each for four),At risk
+R9,Cost,"USD 1,599.00 per site kit",Not met
+R10,Overload limit,"Pin releases at 6374 N nominal, 7648 N at most; rope factor 4.5 at the design tension",Met on paper
+R11,Holds when let go,Two holding pawls; one takes 5.5 kN at 77 MPa tooth bearing,Met on paper
