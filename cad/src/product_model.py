@@ -1,8 +1,10 @@
-"""HeapLine product appearance model (build123d), TRL 3, constructable design (HPL-DDR-002).
+"""HeapLine product appearance model (build123d), TRL 3, constructable design (HPL-DDR-002, HPL-DDR-003).
 
 For photoreal renders only (.kit/export_views.py, then .kit/photoreal.py on Amish's Mac). Every
 part is the model.py solid itself, placed in the display layout of model.py (the kit laid out beside
-the open site box); colours and materials are added for the look. Appearance additions not in
+the open search crate, a reused crate refitted, with the 18 mm probe tips of HPL-DDR-003); colours and
+materials are added for the look. The capstan set shown beside it is the one shared set, kept at the
+host site in its own crate. Appearance additions not in
 model.py, recorded in docs/REVIEW.md: four turns of rope on the drum with a lead to the coil, the
 printed drill card on the inside of the lid, and a posed 1.75 m mannequin standing beside the
 capstan (never between the camera and the kit). CONCEPT, NOT FOR FABRICATION.
@@ -23,7 +25,7 @@ TITLE = "HeapLine: slide-rescue kit kept at the waste pickers' shed"
 
 RENDER_VIEWS = [
     {"name": "hero", "groups": ["shell", "internal", "context"], "explode": False, "el": 24, "az": -38,
-     "note": "Product render from the front right and above (about 24 deg elevation): the open site box with its drill "
+     "note": "Product render from the front right and above (about 24 deg elevation): the open search crate (a reused crate) with its drill "
              "card, six probes standing in a line, two linked crawl boards, the sheet stretcher and sheet clamp, "
              "shovels and spare boards on the left, and the hand capstan on the right with a person standing beside it"},
     {"name": "exploded", "groups": ["shell"], "explode": True, "el": 22, "az": -45,
@@ -50,8 +52,8 @@ LOOK = {  # key: (colour, material, group, exploded offset)
     "bar_pins": ("#9CA3AF", "bright steel", "shell", (0, 0, 1500)),
     "keeper": ("#0E7490", "painted steel", "shell", (0, 0, 1650)),
     "stakes": ("#57534E", "steel", "shell", (0, 0, 0)),
-    "box_body": ("#0F766E", "painted plywood", "internal", (0, 0, 0)),
-    "box_lid": ("#115E59", "painted plywood", "internal", (0, 0, 0)),
+    "box_body": ("#0F766E", "painted timber crate", "internal", (0, 0, 0)),
+    "box_lid": ("#115E59", "painted timber crate", "internal", (0, 0, 0)),
     "box_hardware": ("#9CA3AF", "galvanised steel", "internal", (0, 0, 0)),
     "boards": ("#B45309", "plywood", "internal", (0, 0, 0)),
     "links": ("#9CA3AF", "galvanised steel", "internal", (0, 0, 0)),

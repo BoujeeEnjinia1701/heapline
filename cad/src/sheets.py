@@ -1,8 +1,8 @@
-"""HeapLine drawing sheets, Rev P2 (TRL 3, constructable design HPL-DDR-002).
+"""HeapLine drawing sheets: HPL-DWG-001 Rev P2, HPL-DWG-002 Rev P3 (TRL 3, HPL-DDR-002 and HPL-DDR-003).
 
 Run from the repo root:  python cad/src/sheets.py
-Writes cad/drawings/HPL-DWG-001 (hand capstan, general arrangement) and HPL-DWG-002 (site box,
-packed arrangement) as SVG, PDF and PNG from cad/src/model.py with .kit/drawing.py. Overall sizes
+Writes cad/drawings/HPL-DWG-001 (hand capstan, general arrangement) and HPL-DWG-002 (search crate
+and capstan crate, packed arrangement) as SVG, PDF and PNG from cad/src/model.py with .kit/drawing.py. Overall sizes
 are dimensioned by the kit; main dimensions and interfaces are listed in the notes, taken from
 PARAMS and derived(). The concept blueprint in media/ is HPL-DWG-010; the making sketches for the
 build plan are HPL-DWG-101 onward (cad/src/build_plan_media.py).
@@ -15,11 +15,13 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / ".kit"), str(ROOT / "cad" / "src")]
 from build123d import Compound  # noqa: E402
 from drawing import Sheet  # noqa: E402
-from model import PARAMS as P, capstan_parts, box_parts, packed_contents, derived, CAPSTAN_KEYS  # noqa: E402
+from build123d import Pos  # noqa: E402
+from model import PARAMS as P, capstan_parts, box_parts, packed_contents, packed_capstan, derived, CAPSTAN_KEYS  # noqa: E402
 
 DATE = "2026-10-03"
 REVS = [("P1", "Preliminary GA for TRL 3 (from cad/src/model.py)", DATE, "AC"),
         ("P2", "HPL-DDR-002: design for construction", DATE, "AC")]
+REVS_BOX = REVS + [("P3", "HPL-DDR-003: search crate at every site, capstan crate at the host site", DATE, "AC")]
 
 
 def safe_project_views(part, workdir, line_weight=0.35):
@@ -84,27 +86,35 @@ def capstan_sheet():
 def box_sheet():
     bxp = box_parts(P)
     pk = packed_contents(P)
+    cbx = box_parts(P, which="cap_box")
+    pc = packed_capstan(P)
+    dx = P["box"][0] / 2 + P["cap_box"][0] / 2 + 400.0       # capstan crate drawn to the right of the search crate
     work = ROOT / "cad" / "drawings" / "_views2"
-    views = safe_project_views(Compound([bxp["box_body"], bxp["box_hardware"]] + list(pk.values())), work, line_weight=0.25)
+    shapes = ([bxp["box_body"], bxp["box_hardware"]] + list(pk.values())
+              + [Pos(dx, 0, 0) * s_ for s_ in [cbx["box_body"], cbx["box_hardware"]] + list(pc.values())])
+    views = safe_project_views(Compound(shapes), work, line_weight=0.25)
     work2 = ROOT / "cad" / "drawings" / "_views2b"
-    iso = safe_project_views(Compound(list(bxp.values())), work2, line_weight=0.25)["iso"]
-    s = Sheet(project="HeapLine", title="Site box: packed arrangement", dwg_no="HPL-DWG-002", rev="P3",
-              author="Amish Chadha", date=DATE, scale=1 / 20, theme="technical",
-              material="Reused crate refitted, or 18 mm exterior plywood box where none is found; contents per bom/bom.csv. PRELIMINARY, NOT FOR FABRICATION",
-              revisions=REVS + [("P3", "HPL-DDR-003: reused crate box; 18 mm probe tips", DATE, "AC")])
+    iso = safe_project_views(Compound(list(bxp.values()) + [Pos(dx, 0, 0) * s_ for s_ in cbx.values()]), work2, line_weight=0.25)["iso"]
+    Lb, Wb, Hb = P["box"]
+    Lc, Wc, Hc = P["cap_box"]
+    t = P["ply"]
+    s = Sheet(project="HeapLine", title="Search crate and capstan crate: packed arrangement", dwg_no="HPL-DWG-002", rev="P3",
+              author="Amish Chadha", date=DATE, scale=1 / 25, theme="technical",
+              material="Reused timber crates (or bought job boxes) of at least these sizes; contents per bom/bom.csv. PRELIMINARY, NOT FOR FABRICATION",
+              revisions=REVS_BOX)
     s.add_ortho(views)
-    s.add_svg(iso, 276, 32, 140, 92, label="Isometric view, lid closed", sublabel="Not to scale; seen from the front right")
-    s.add_notes("Packing and box (mm)", [
-        "Reused crate, inside at least 1664 x 984 x 1042 (1, 2)",
-        "Or plywood box 1700 x 1020 x 1060 on skids; lid 1740 x 1060",
-        "Plywood box inside 1664 x 984 x 1042; corner battens 45 x 45",
-        "Back: four crawl boards flat, 340 high (4)",
-        "On the boards: four shovels, probe bag, bars, rolled stretcher",
-        "Front right: shared capstan, where kept; bars off (9 to 17)",
-        "Front left: rope, slings and clamp, stakes, lookout and PPE bags",
-        "Lid: drill card inside, stop rule outside (27)",
-        "Combination padlock on the front hasp (3)",
-        "Lid closed in the views; contents shown inside (top view)",
+    s.add_svg(iso, 276, 32, 140, 92, label="Isometric view, lids closed", sublabel="Not to scale; search crate left, capstan crate right")
+    s.add_notes("Packing and crates (mm)", [
+        f"Search crate, every site: outside {Lb:.0f} x {Wb:.0f} x {Hb:.0f} on skids (1, 2)",
+        f"Inside at least {Lb - 2 * t:.0f} x {Wb - 2 * t:.0f} x {Hb - t:.0f}; corner battens 45",
+        "Back: four crawl boards flat; shovels, probe bag on top (4 to 8)",
+        "Front: lookout and lights bag, PPE bag, stretcher roll on top",
+        f"Capstan crate, host site only: outside {Lc:.0f} x {Wc:.0f} x {Hc:.0f} (31)",
+        f"Inside at least {Lc - 2 * t:.0f} x {Wc - 2 * t:.0f} x {Hc - t:.0f}",
+        "Capstan upright at the back, bars off, stakes out (9 to 17)",
+        "Front: rope, slings and clamp, stakes, two bars standing",
+        "Lids: drill card inside, stop rule outside (27)",
+        "Combination padlock on each front hasp (3)",
         "Third-angle; front view from -Y; (n) = BOM line",
     ], x=276, y=135, width=146)
     out = s.save(ROOT / "cad" / "drawings" / "HPL-DWG-002")

@@ -153,17 +153,19 @@ for case in ("central", "stiff"):
     say(f"B1{case[0]}", f"{case.capitalize()} debris (cone {qc / 1e6:.1f} MPa, sleeve {fs / 1e3:.0f} kPa): tip {tipF:.0f} N, "
                         f"friction {fs * per_m:.0f} N/m; {F25:.0f} N to push to 2.5 m; reach {reach[(case, 'one')]:.1f} m "
                         f"for one person and {reach[(case, 'two')]:.1f} m for two (push capped at the probe's buckling load)")
-# for the record: the 22 mm tip used before HPL-DDR-003 (Amish, 2026-10-03, decision 13 A: 18 mm tip on all six)
+# for comparison: the 22 mm tip of the TRL 3 design, replaced by 18 mm under Amish's decision 20A (HPL-DDR-003)
 A_tip0 = A_tip
 A_tip = math.pi * 0.022 ** 2 / 4
 old22 = {(c, w): reach_depth(A[f"qc_{c}"], A[f"fs_{c}"], A[f"push_{w}"]) for c in ("central", "stiff") for w in ("one", "two")}
 A_tip = A_tip0
-say("B4", f"Previous 22 mm tip, for comparison: stiff debris reach {old22[('stiff', 'one')]:.1f} m for one person, "
+say("B4", f"For comparison, the earlier 22 mm tip: stiff debris reach {old22[('stiff', 'one')]:.1f} m for one person, "
           f"{old22[('stiff', 'two')]:.1f} m for two; central {old22[('central', 'one')]:.1f} m for one")
+say("B5", f"Tip clearance over the 16 mm tube: {(dt_ - td_) / 2:.0f} mm a side (was 3 mm with the 22 mm tip); the sleeve friction "
+          f"is assumed not to rise as the clearance falls, which the TRL 4 test heap must confirm")
 for Lp in (1.0, 2.0, 3.0):
     Pcr = math.pi ** 2 * E * I_p / (Lp * 1000) ** 2
     say(f"B2-{Lp:.0f}", f"Probe tube 16 x 2.0 buckling, {Lp:.0f} m free, pinned ends: {Pcr:.0f} N")
-say("B3", f"Probe {D['probe_len']:.0f} mm assembled, {M['probe']:.2f} kg; tip {dt_:.0f} mm with a 3 mm rounded point ({(dt_ - td_) / 2:.0f} mm wider than the tube each side); usable depth about "
+say("B3", f"Probe {D['probe_len']:.0f} mm assembled, {M['probe']:.2f} kg; tip {dt_:.0f} mm with a 3 mm rounded point; usable depth about "
           f"{usable:.1f} m with the handle at chest height above the surface")
 
 # ------------------------------------------------------------------ C. crawl board
@@ -221,60 +223,66 @@ wave2 = cap_body + cap_drum + M["bars"] + M["bar_pins"] + M["stakes"] + bought["
 total = wave1 + wave2
 for k, v in items.items():
     say("F-" + re.sub(r"[^a-z]", "", k.lower())[:12], f"{k}: {v:.1f} kg")
-say("F1", f"Heaviest single carried item: {heaviest[1].lower()} at {heaviest[0]:.1f} kg; site box {M['box_body']:.0f} kg body and "
-          f"{M['box_lid']:.0f} kg lid (stays at the shed)")
+say("F1", f"Heaviest single carried item: {heaviest[1].lower()} at {heaviest[0]:.1f} kg; search crate {M['box_body']:.0f} kg body and "
+          f"{M['box_lid']:.0f} kg lid as modelled (stays at the shed); capstan crate at the host site {M['cap_box_body']:.0f} kg "
+          f"and {M['cap_box_lid']:.0f} kg")
 say("F2", f"Carried kit {total:.0f} kg: search wave (boards, probes, shovels, stretcher, lookout kit, lights, PPE) {wave1:.0f} kg, "
           f"capstan wave {wave2:.0f} kg; {total / 4:.1f} kg each if four carry it all at once, {wave1 / 4:.1f} kg each for the "
           f"search wave alone")
-say("F2a", f"Two waves (HPL-DDR-003): four carry the search wave at {wave1 / 4:.1f} kg each; a second group of three brings the "
-           f"capstan wave at {wave2 / 3:.1f} kg each (carry limit {A['carry_limit']:.0f} kg)")
 t_run = A["distance"] / A["run_mps"]
 t_carry = A["distance"] / A["carry_mps"]
 t_total = t_run + A["open_s"] + t_carry + max(A["boards_s"], A["probe_assemble_s"]) + A["lookout_s"]
+say("F2b", f"Two waves (decision 22A): four carry the search wave first, {wave1 / 4:.1f} kg each; a second group of three "
+           f"brings the capstan set, {wave2 / 3:.1f} kg each (limit {A['carry_limit']:.0f} kg)")
 say("F3", f"Deployment: run {A['distance']:.0f} m to the shed {t_run:.0f} s, open {A['open_s']:.0f} s, carry back {t_carry:.0f} s, "
           f"lookout posted {A['lookout_s']:.0f} s, first boards laid while probes are joined {A['boards_s']:.0f} s: "
           f"{t_total:.0f} s ({t_total / 60:.1f} min)")
 
+# capstan wave from the host site (decision 23C): run to the host shed, open, carry back at the loaded pace
+cap_open_s = 60.0       # open the capstan crate, lift out the capstan and bags, share them out among three
+arrive = {}
+for dist in (100.0, 300.0, 500.0, 1000.0):
+    arrive[dist] = dist / A["run_mps"] + cap_open_s + dist / A["carry_mps"]
+say("F4", "Capstan wave arrival after the alarm, by walking distance from the host shed (run there, open, carry back): "
+          + "; ".join(f"{d_:.0f} m {t_ / 60:.1f} min" for d_, t_ in arrive.items()))
 # ------------------------------------------------------------------ G. cost
 rows = list(csv.DictReader(open(ROOT / "bom" / "bom.csv")))
-# cost_basis (HPL-DDR-003): site = bought for every site; shared = the capstan set, one per group of neighbouring
-# sites; stock = PPE issued from the cooperative's own stock
-cost_all = sum(float(r_["qty"]) * float(r_["unit_cost_usd"]) for r_ in rows)
-cost = sum(float(r_["qty"]) * float(r_["unit_cost_usd"]) for r_ in rows if r_["cost_basis"] == "site")
-stock_cost = sum(float(r_["qty"]) * float(r_["unit_cost_usd"]) for r_ in rows if r_["cost_basis"] == "stock")
+cost = sum(float(r_["qty"]) * float(r_["unit_cost_usd"]) for r_ in rows)
 byline = {int(r_["item"].split()[0]): float(r_["qty"]) * float(r_["unit_cost_usd"]) for r_ in rows}
 target = float(re.search(r"budget_usd:\s*([0-9.]+)", (ROOT / "project.yaml").read_text()).group(1))
-cap_cost = sum(byline[k] for k in range(9, 23))
+CAP_LINES = list(range(9, 23)) + [31]          # the shared capstan set and its crate (decision 23C)
+cap_cost = sum(byline[k] for k in CAP_LINES)
+site_cost = cost - cap_cost                     # search kit and its crate, kept at every site
 search_cost = sum(byline[k] for k in (4, 5, 6, 7, 8, 23, 24, 27))
-say("G1", f"Parts bought for each site: USD {cost:,.2f}; shared capstan set with its rope, slings and clamp USD {cap_cost:,.2f} "
-          f"for each group of sites; reused crate box with its hardware USD {byline[1] + byline[2] + byline[3]:,.2f}; lighting "
-          f"USD {byline[25]:,.2f}; PPE from the cooperative's stock (USD {stock_cost:,.2f} if bought new)")
-for n_sites in (1, 2, 3, 4):
-    who = "not shared (one site)" if n_sites == 1 else f"shared by {n_sites} sites"
-    say(f"G1-{n_sites}", f"With the capstan set {who}: USD {cost + cap_cost / n_sites:,.2f} a site")
-say("G1b", f"Every line at its listed price (one site, own capstan set, new PPE, reused crate box): USD {cost_all:,.2f}")
+R9_target = 850.0                               # restated by Amish's decision 23C (HPL-REQ-001 v0.4)
+say("G1", f"Search kit at every site, with its crate: USD {site_cost:,.2f}; crate and hardware USD {byline[1] + byline[2] + byline[3]:,.2f}; "
+          f"lighting USD {byline[25]:,.2f}; PPE from the cooperative's stock USD {byline[26]:,.2f}")
+say("G1b", f"Shared capstan set (capstan, rope, slings, clamp and capstan crate), one per group of neighbouring sites: "
+           f"USD {cap_cost:,.2f}; per site USD {cap_cost / 2:,.2f} if two sites share it, USD {cap_cost / 3:,.2f} if three")
 say("G2", f"Search core (boards, links, probes, pins, shovels, stretcher, lookout kit, cards): USD {search_cost:,.2f}")
-say("G3", f"Value-engineering target: USD {target:,.0f}. Estimated cost of the constructable design: USD {cost:,.2f} a site, "
-          f"plus a share of the USD {cap_cost:,.2f} capstan set (USD {abs(target - cost):,.2f} {'under' if cost <= target else 'over'} "
-          f"the target before the share)")
+say("G2b", f"R9 as restated: search kit USD {site_cost:,.2f} per site against USD {R9_target:,.0f} "
+           f"(USD {abs(R9_target - site_cost):,.2f} {'under' if site_cost <= R9_target else 'over'})")
+say("G3", f"Value-engineering target: USD {target:,.0f}. Estimated cost of the constructable design: USD {cost:,.2f} "
+          f"(USD {abs(target - cost):,.2f} {'under' if cost <= target else 'over'} the target), for the host site: its search kit "
+          f"and the shared capstan set")
 
 # ------------------------------------------------------------------ results table
 res = [
     ("R1", "Deploy fast", f"{t_total / 60:.1f} min estimated from alarm to first probe line", "Met on paper; timed drills at TRL 4"),
-    ("R2", "Probe depth", f"{dt_:.0f} mm tip. Central debris: one person {reach[('central', 'one')]:.1f} m, two {reach[('central', 'two')]:.1f} m; "
+    ("R2", "Probe depth", f"18 mm tip. Central debris: one person {reach[('central', 'one')]:.1f} m, two {reach[('central', 'two')]:.1f} m; "
                           f"stiff debris: one {reach[('stiff', 'one')]:.1f} m, two {reach[('stiff', 'two')]:.1f} m",
-     "Met on paper (two people in stiffer debris); confirm on a test heap at TRL 4"),
+     "Met on paper with two people in stiffer debris; confirm on a test heap at TRL 4"),
     ("R3", "Crawl board support", f"Sinkage {sink * 1000:.0f} mm; bridges a 0.8 m void at {sig:.1f} MPa", "Met on paper"),
     ("R4", "Capstan pull", f"Pin releases at {T_rel:.0f} N ({T_lo:.0f} to {T_hi:.0f} N); {F_end / 2:.0f} N each for four people at 5,000 N", "Met on paper"),
     ("R5", "Casualty transport", f"Debris level {cases[('debris', 'level')]:.0f} N: {cases[('debris', 'level')] / 4:.0f} N each for four, "
                                  f"{cases[('debris', 'level')] / 2:.0f} N each for two; boards {cases[('boards', 'level')] / 2:.0f} N each for two",
-     "Met on paper under the drill card rule: four haulers on debris, two only along the boards"),
+     "Met with the drill-card rule: four haulers on debris, two only along the boards"),
     ("R6", "Stop rule understood", "Stop rule printed on the lid and pocket cards", "Not verifiable at TRL 3"),
-    ("R7", "Storage life", "Sound reused crate refitted and painted (or exterior plywood), painted or galvanised steel, UV-stabilised HDPE, alkaline cells stored out",
-     "Met on paper by material choice if the reused crate is sound and painted; inspection at TRL 4"),
+    ("R7", "Storage life", "Exterior plywood, painted or galvanised steel, UV-stabilised HDPE, alkaline cells stored out", "Met on paper by material choice; inspection at TRL 4"),
     ("R8", "Portable", f"Heaviest item {heaviest[0]:.1f} kg; carried kit {total:.0f} kg in two waves: search wave {wave1 / 4:.1f} kg each "
-                       f"for four, capstan wave {wave2 / 3:.1f} kg each for three", "Met on paper for each wave (two waves, HPL-DDR-003)"),
-    ("R9", "Cost", f"USD {cost:,.2f} per site with a shared capstan set (USD {cap_cost:,.2f} per group of sites) and PPE from stock", "Not met"),
+                       f"for four, capstan wave {wave2 / 3:.1f} kg each for three", "Met in two waves"),
+    ("R9", "Cost", f"USD {site_cost:,.2f} per site search kit against USD {R9_target:,.0f}; shared capstan set USD {cap_cost:,.2f} "
+                   f"per group of neighbouring sites", "Met as restated"),
     ("R10", "Overload limit", f"Pin releases at {T_rel:.0f} N nominal, {T_hi:.0f} N at most; rope factor {mbs_spliced / A['design_T']:.1f} at the design tension", "Met on paper"),
     ("R11", "Holds when let go", f"Two holding pawls; one takes {F_hold / 1000:.1f} kN at {F_hold / (hh * P['ring_t']):.0f} MPa tooth bearing", "Met on paper"),
 ]

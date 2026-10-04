@@ -1,12 +1,12 @@
 id,requirement,result,status
 R1,Deploy fast,4.6 min estimated from alarm to first probe line,Met on paper; timed drills at TRL 4
-R2,Probe depth,"18 mm tip. Central debris: one person 2.6 m, two 2.6 m; stiff debris: one 0.6 m, two 2.6 m",Met on paper (two people in stiffer debris); confirm on a test heap at TRL 4
+R2,Probe depth,"18 mm tip. Central debris: one person 2.6 m, two 2.6 m; stiff debris: one 0.6 m, two 2.6 m",Met on paper with two people in stiffer debris; confirm on a test heap at TRL 4
 R3,Crawl board support,Sinkage 44 mm; bridges a 0.8 m void at 4.0 MPa,Met on paper
 R4,Capstan pull,"Pin releases at 6374 N (5099 to 7648 N); 114 N each for four people at 5,000 N",Met on paper
-R5,Casualty transport,"Debris level 510 N: 127 N each for four, 255 N each for two; boards 153 N each for two","Met on paper under the drill card rule: four haulers on debris, two only along the boards"
+R5,Casualty transport,"Debris level 510 N: 127 N each for four, 255 N each for two; boards 153 N each for two","Met with the drill-card rule: four haulers on debris, two only along the boards"
 R6,Stop rule understood,Stop rule printed on the lid and pocket cards,Not verifiable at TRL 3
-R7,Storage life,"Sound reused crate refitted and painted (or exterior plywood), painted or galvanised steel, UV-stabilised HDPE, alkaline cells stored out",Met on paper by material choice if the reused crate is sound and painted; inspection at TRL 4
-R8,Portable,"Heaviest item 21.2 kg; carried kit 151 kg in two waves: search wave 21.5 kg each for four, capstan wave 21.7 kg each for three","Met on paper for each wave (two waves, HPL-DDR-003)"
-R9,Cost,USD 830.00 per site with a shared capstan set (USD 449.00 per group of sites) and PPE from stock,Not met
+R7,Storage life,"Exterior plywood, painted or galvanised steel, UV-stabilised HDPE, alkaline cells stored out",Met on paper by material choice; inspection at TRL 4
+R8,Portable,"Heaviest item 21.2 kg; carried kit 151 kg in two waves: search wave 21.5 kg each for four, capstan wave 21.7 kg each for three",Met in two waves
+R9,Cost,USD 827.00 per site search kit against USD 850; shared capstan set USD 547.00 per group of neighbouring sites,Met as restated
 R10,Overload limit,"Pin releases at 6374 N nominal, 7648 N at most; rope factor 4.5 at the design tension",Met on paper
 R11,Holds when let go,Two holding pawls; one takes 5.5 kN at 77 MPa tooth bearing,Met on paper

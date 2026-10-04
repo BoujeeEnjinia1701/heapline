@@ -7,7 +7,8 @@ Exports STEP and STL into cad/step and cad/stl:
                                     head, pawls, bars, bushes, hold-down roller, keeper, stakes
     heapline-probe.step / .stl      one sectional probe (tip section, middle section, top section, pins)
     heapline-board.step / .stl      two crawl boards joined by their link plates
-    heapline-box.step / .stl        site box body and lid (closed)
+    heapline-box.step / .stl        search crate body and lid (closed), the crate every site keeps
+    heapline-capbox.step / .stl     capstan crate body and lid (closed), kept at the host site only
     heapline-stretcher.step / .stl  sheet stretcher laid flat with its straps
     heapline-clamp.step / .stl      sheet clamp with its shackle lug
     heapline-assembly.step          the kit laid out beside the open box (display layout)
@@ -23,10 +24,13 @@ Constructable design, 2026-10-03 (HPL-DDR-002, decided under Amish's pre-approva
     lever head, held by two pawls on a ratchet ring at its foot, with a 6 mm shear pin between the
     drive ratchet and the drum that limits rope tension to about 6.3 kN; the rope leaves under a
     hold-down roller near the ground and the anchor sling pulls from an eye at the same height;
-    probes are three 1 m sections of 16 x 2 mm steel tube on spigots and R-clips with an 18 mm tip
-    (22 mm until HPL-DDR-003, Amish, 2026-10-03);
+    probes are three 1 m sections of 16 x 2 mm steel tube on spigots and R-clips with a blunt tip;
     crawl boards are 15 mm plywood decks on two 45 x 70 mm battens, joined end to end by pinned link
-    plates; the site box is 18 mm exterior plywood on skids with an overlapping lid.
+    plates.
+Amish's requirement decisions of 2026-10-03 (HPL-DDR-003): the probe tip is 18 mm on all six probes
+(20A); one capstan set is shared by neighbouring sites and kept at the host site in its own capstan
+crate, and each site keeps its search kit in a reused crate or bought job box (23C). The crates are
+modelled as boarded crates of the minimum inside size, on skids with an overlapping lid.
 Main dimensions and interfaces only; tolerances are TRL 4 work. The same PARAMS feed
 docs/04-calcs/sizing.py (HPL-CAL-001), the drawings (cad/src/sheets.py), the concept media
 (cad/src/concept_media.py), the product model and the build plan pictures.
@@ -64,14 +68,16 @@ PARAMS = {
     # ---- rope (BOM 20)
     "rope_d": 14.0, "rope_mbs": 40000.0, "rope_len": 30.0,
     # ---- probe (BOM 6): tube OD, wall, section length, number of sections; tip; spigot; handle
-    "probe_tube": (16.0, 2.0, 1000.0, 3), "probe_tip": (18.0, 35.0, 20.0, 30.0),  # dia, cone, parallel, spigot (18 mm: HPL-DDR-003)
+    "probe_tube": (16.0, 2.0, 1000.0, 3), "probe_tip": (18.0, 35.0, 20.0, 30.0),  # dia, cone, parallel, spigot (18 mm, HPL-DDR-003)
     "probe_spigot": (11.5, 120.0), "probe_pin": 5.0, "probe_handle": (26.9, 2.6, 450.0),
     # ---- crawl board (BOM 4): deck length, width, ply thickness; battens; link holes; slot
     "board": (1500.0, 450.0, 15.0), "batten": (45.0, 70.0, 30.0),   # width, depth, inset from edge
     "link": (40.0, 6.0, 160.0, 12.0, 75.0, 40.0),   # plate width, thickness, length, pin dia, pin length, hole from end
     "hand_slot": (140.0, 35.0, 75.0),
-    # ---- site box (BOM 1, 2): outer length, width, body height; ply; skids; lid skirt
-    "box": (1700.0, 1020.0, 1060.0), "ply": 18.0, "skid": (70.0, 45.0), "skirt": 48.0, "lid_gap": 2.0,
+    # ---- search crate (BOM 1, 2) at every site, and capstan crate (BOM 31) at the host site only:
+    #      outer length, width, body height (minimum sizes for a reused crate); boards; skids; lid skirt
+    "box": (1640.0, 860.0, 640.0), "cap_box": (940.0, 900.0, 1060.0),
+    "ply": 18.0, "skid": (70.0, 45.0), "skirt": 48.0, "lid_gap": 2.0,
     "lid_open_deg": 100.0,
     # ---- stretcher (BOM 23): sheet length, width, thickness; slots; straps
     "sheet": (2000.0, 900.0, 2.0), "sheet_slot": (130.0, 35.0, 60.0), "strap_w": 50.0,
@@ -463,10 +469,11 @@ def link_plate(P=PARAMS, x_joint=0.0):
     return fuse(plates)
 
 
-# ----------------------------------------------------------------------------- site box
-def box_parts(P=PARAMS, open_lid=False):
-    """Site box centred on x = y = 0, ground at z = 0; the lid hinges along the back (+Y) top edge."""
-    L, W, H = P["box"]
+# ----------------------------------------------------------------------------- crates (search crate, capstan crate)
+def box_parts(P=PARAMS, open_lid=False, which="box"):
+    """Crate centred on x = y = 0, ground at z = 0; the lid hinges along the back (+Y) top edge.
+    which = "box": the search crate every site keeps; "cap_box": the capstan crate at the host site."""
+    L, W, H = P[which]
     t = P["ply"]
     sk_w, sk_h = P["skid"]
     zb = sk_h
@@ -502,7 +509,7 @@ def box_parts(P=PARAMS, open_lid=False):
     seal = (bx(-L / 2, L / 2, -W / 2, W / 2, ztop, zl) - bx(-L / 2 + t, L / 2 - t, -W / 2 + t, W / 2 - t, ztop - 1, zl + 1))
     # hardware: three strap hinges on the back, hasp on the front
     hw = []
-    for hx in (-600.0, 0.0, 600.0):
+    for hx in (-0.37 * L, 0.0, 0.37 * L):
         hw.append(bx(hx - 40, hx + 40, W / 2, W / 2 + 3, ztop - 120, ztop - 50 + 0.0))
     hw.append(bx(-40, 40, -W / 2 - 3, -W / 2, ztop - 130, ztop - 60))
     if open_lid:
@@ -562,10 +569,11 @@ def shovel(P=PARAMS):
     return fuse([blade, socket, handle, bx(-L / 2 + bl - 30, -L / 2 + bl, -15, 15, 2, 18)])
 
 
-# ----------------------------------------------------------------------------- packed site box
+# ----------------------------------------------------------------------------- packed crates
 def packed_contents(P=PARAMS):
-    """Everything stowed in the closed site box (box centred at the origin). Bags and bundles are
-    drawn as their outer envelopes. Returns {name: shape}; checks() confirms nothing overlaps."""
+    """The search kit stowed in the closed search crate (crate centred at the origin). Bags and
+    bundles are drawn as their outer envelopes. Returns {name: shape}; checks() confirms nothing
+    overlaps. PPE comes from the cooperative's stock and is kept in its bag in this crate."""
     L, W, H = P["box"]
     t = P["ply"]
     z0 = P["skid"][1] + t                         # inside floor
@@ -578,32 +586,45 @@ def packed_contents(P=PARAMS):
     yb = yi - 4 - bW / 2
     out["Crawl boards (4), stacked"] = Compound([Pos(bx_c, yb, z0 + k * (bd + bt)) * board(P) for k in range(4)])
     ztop = z0 + 4 * (bd + bt)
-    # capstan, bars off and stakes out, at the front right
-    cap = capstan_parts(P)
-    keys = [k for k in CAPSTAN_KEYS if k not in ("bars", "bar_pins", "stakes")]
-    cx = xi - 5 - (P["frame_l"] / 2 + 50.0 + 26.0)
-    cy = -yi + 5 + (P["frame_w"] / 2 + P["stake_tube"][0])
-    out["Capstan, bars off"] = Pos(cx, cy, z0) * Compound([cap[k] for k in keys])
-    # on the boards: shovels in two layers, then the probe bag, bars and stretcher roll
+    # on the boards: shovels in two layers, then the probe bag
     sh = shovel(P)
     sl = []
     for layer in range(2):
         for k, sg in enumerate((-1, 1)):
             y = yb + sg * 110
-            s_ = Pos(-60.0, y, ztop + 1 + layer * 40) * (Rot(0, 0, 180) * sh if k else sh)
+            s_ = Pos(bx_c, y, ztop + 1 + layer * 40) * (Rot(0, 0, 180) * sh if k else sh)
             sl.append(s_)
     out["Shovels (4)"] = Compound(sl)
     z2 = ztop + 82
-    out["Probe bag (18 sections)"] = Pos(-60.0, yb - 150, z2 + 80) * Rot(0, 90, 0) * Cylinder(80, 1160)
-    out["Capstan bars (2)"] = Compound([bx(-500, 400, yb + 20 + k * 50, yb + 60 + k * 50, z2, z2 + 40) for k in range(2)])
-    out["Stretcher, rolled"] = Pos(-120.0, yb + 60, z2 + 165) * Rot(0, 90, 0) * Cylinder(125, 900)
-    # bags at the front left
+    out["Probe bag (18 sections)"] = Pos(bx_c, yb, z2 + 80) * Rot(0, 90, 0) * Cylinder(80, 1160)
+    # bags along the front, the rolled stretcher on top of them
     xl = -xi + 50
+    out["Lookout kit and lights bag"] = bx(xl, xl + 275, -yi + 5, -yi + 345, z0, z0 + 300)
+    out["PPE bag"] = bx(xl + 280, xl + 980, -yi + 5, -yi + 345, z0, z0 + 300)
+    out["Stretcher, rolled"] = Pos(xl + 40 + 450, -yi + 5 + 170, z0 + 305 + 125) * Rot(0, 90, 0) * Cylinder(125, 900)
+    return out
+
+
+def packed_capstan(P=PARAMS):
+    """The capstan set stowed in the closed capstan crate at the host site (crate centred at the
+    origin): capstan upright with its bars off and stakes out, bars standing in a front corner,
+    rope, slings and clamp, and stakes in bags along the front."""
+    L, W, H = P["cap_box"]
+    t = P["ply"]
+    z0 = P["skid"][1] + t
+    xi, yi = L / 2 - t, W / 2 - t
+    out = {}
+    cap = capstan_parts(P)
+    keys = [k for k in CAPSTAN_KEYS if k not in ("bars", "bar_pins", "stakes")]
+    cy = yi - 5 - (P["frame_w"] / 2 + P["stake_tube"][0])
+    out["Capstan, bars off"] = Pos(0.0, cy, z0) * Compound([cap[k] for k in keys])
+    xl = -xi + 50                                 # clear of the corner battens
     out["Rope bag"] = bx(xl, xl + 420, -yi + 5, -yi + 345, z0, z0 + 300)
     out["Slings, shackles and sheet clamp bag"] = bx(xl, xl + 420, -yi + 5, -yi + 345, z0 + 305, z0 + 505)
     out["Stakes (4) and mallet"] = bx(xl + 425, xl + 700, -yi + 5, -yi + 345, z0, z0 + 120)
-    out["Lookout kit and lights bag"] = bx(xl + 425, xl + 700, -yi + 5, -yi + 345, z0 + 125, z0 + 425)
-    out["PPE bag"] = bx(xl, xl + 700, -yi + 5, -yi + 345, z0 + 510, z0 + 810)
+    b = P["bar"][0]
+    out["Capstan bars (2), standing"] = Compound([bx(xl + 705 + k * (b + 5), xl + 705 + k * (b + 5) + b, -yi + 5, -yi + 5 + b,
+                                                    z0, z0 + P["bar"][2]) for k in range(2)])
     return out
 
 
@@ -618,9 +639,9 @@ class Comp:
 
 
 BOM = {  # key: (BOM line, plain name, material)
-    "box_body": (1, "Site box body", "plywood"),
-    "box_lid": (2, "Site box lid", "plywood"),
-    "box_hardware": (3, "Box hinges, hasp and seal", "steel"),
+    "box_body": (1, "Search crate body", "plywood"),
+    "box_lid": (2, "Search crate lid", "plywood"),
+    "box_hardware": (3, "Crate hinges, hasp and seal", "steel"),
     "boards": (4, "Crawl boards (4)", "plywood"),
     "links": (5, "Board link plates", "steel"),
     "probe_tip_section": (6, "Probe tip section", "steel"),
@@ -844,6 +865,33 @@ def checks(P=PARAMS, verbose=True):
             v = _overlap(pk[a], sh_)
             if not v < 1.0:
                 res["overlaps"].append(("packed: " + a, "box", round(v, 1)))
+    cbx = box_parts(P, which="cap_box")
+    for a, b in (("box_body", "box_lid"), ("box_body", "box_hardware"), ("box_lid", "box_hardware")):
+        v = _overlap(cbx[a], cbx[b])
+        if not v < 1.0:
+            res["overlaps"].append(("capstan crate " + a, b, round(v, 1)))
+    pc = packed_capstan(P)
+    cshell = [cbx["box_body"], cbx["box_lid"], cbx["box_hardware"]]
+    names = list(pc)
+    for i, a in enumerate(names):
+        for b in names[i + 1:]:
+            v = _overlap(pc[a], pc[b])
+            if not v < 1.0:
+                res["overlaps"].append(("capstan crate: " + a, b, round(v, 1)))
+        for sh_ in cshell:
+            v = _overlap(pc[a], sh_)
+            if not v < 1.0:
+                res["overlaps"].append(("capstan crate: " + a, "crate", round(v, 1)))
+    # every packed item lies inside its crate's inside space
+    for nm, (pk_, which) in {"search crate": (pk, "box"), "capstan crate": (pc, "cap_box")}.items():
+        L_, W_, H_ = P[which]
+        xi_, yi_ = L_ / 2 - P["ply"], W_ / 2 - P["ply"]
+        zf_, zt_ = P["skid"][1] + P["ply"], P["skid"][1] + H_
+        for a, sh_ in pk_.items():
+            bb = sh_.bounding_box()
+            if (bb.min.X < -xi_ - 0.5 or bb.max.X > xi_ + 0.5 or bb.min.Y < -yi_ - 0.5 or bb.max.Y > yi_ + 0.5
+                    or bb.min.Z < zf_ - 0.5 or bb.max.Z > zt_ + 0.5):
+                res["overlaps"].append((nm + ": " + a, "outside the crate", 0))
     cl = sheet_clamp(P)
     v = _overlap(cl["clamp_bars"], cl["clamp_bolts"])
     if not v < 1.0:
@@ -872,6 +920,9 @@ def masses(P=PARAMS):
     bxp = box_parts(P)
     m["box_body"] = bxp["box_body"].volume * 1e-9 * P["rho_ply"]
     m["box_lid"] = bxp["box_lid"].volume * 1e-9 * P["rho_ply"]
+    cbx = box_parts(P, which="cap_box")
+    m["cap_box_body"] = cbx["box_body"].volume * 1e-9 * P["rho_ply"]
+    m["cap_box_lid"] = cbx["box_lid"].volume * 1e-9 * P["rho_ply"]
     st = stretcher(P)
     m["stretcher"] = st["sheet"].volume * 1e-9 * P["rho_hdpe"] + 0.6       # straps and buckles about 0.6 kg
     cl = sheet_clamp(P)
@@ -894,6 +945,7 @@ def export(P=PARAMS):
               "probe": Compound(list(pr.values())),
               "board": Compound([Pos(-L / 2, 0, 0) * board(P), Pos(L / 2, 0, 0) * board(P), link_plate(P, 0.0)]),
               "box": Compound(list(bxp.values())),
+              "capbox": Compound(list(box_parts(P, which="cap_box").values())),
               "stretcher": Compound(list(st.values())),
               "clamp": Compound(list(cl.values()))}
     for g, cmp in groups.items():

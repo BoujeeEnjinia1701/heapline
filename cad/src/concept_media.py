@@ -1,4 +1,4 @@
-"""HeapLine concept media (TRL 3, constructable design HPL-DDR-002), generated from the parametric model.
+"""HeapLine concept media (TRL 3, constructable design HPL-DDR-002 with HPL-DDR-003), generated from the parametric model.
 
 Run from the repo root:  python cad/src/concept_media.py
 Takes every component from cad/src/model.py in the display layout (the kit laid out beside the
@@ -74,13 +74,13 @@ flow = {"title": "capstan energy per metre of rope at 5 kN, kJ (HPL-CAL-001 esti
 
 outs = render_all(
     parts, project="HeapLine", title="Dumpsite slide-rescue kit concept", dwg_no="HPL-DWG-010",
-    key_figures=["Site box: reused crate or 1.74 x 1.06 x 1.13 m plywood box; stays at the shed",
-                 "Six 3.07 m probes, 18 mm tip, in three 1 m sections",
+    key_figures=["Search crate 1.68 x 0.90 x 0.71 m, reused; stays at the shed",
+                 "Six 3.07 m probes, 18 mm tips; 2.6 m deep with two people",
                  "Four 1.5 x 0.45 m crawl boards, 9.7 kg; 44 mm sinkage",
                  "Capstan: 5 kN with four people at 114 N each",
                  "Shear pin releases at about 6.4 kN; drum held by two pawls",
-                 "Carried in two waves: 21.5 kg each for four, then 21.7 kg each for three",
-                 "Parts USD 830 a site plus a share of the USD 449 capstan set (target USD 1,800)"],
+                 "Two waves: search kit 21.5 kg each, capstan 21.7 kg each",
+                 "USD 827 a site; shared capstan set USD 547 a group"],
     scale_figure=False, context=context, cut=False, web_model=False, flow=flow)
 
 # Web model at a coarse tessellation (a few MB), with the kit's viewer page

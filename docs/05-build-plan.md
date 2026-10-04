@@ -3,9 +3,9 @@ doc_id: HPL-BLD-001
 title: HeapLine prototype build plan
 project: HeapLine
 doc_type: Build plan
-version: "0.2"
+version: "0.3"
 status: Draft
-date: '2026-10-03'
+date: '2026-10-04'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -16,7 +16,11 @@ revisions:
 - version: "0.2"
   date: '2026-10-03'
   author: Amish Chadha
-  change: Round 2 requirement decisions (HPL-DDR-003); 18 mm probe tip, site box from a reused crate with the plywood box as the fallback, PPE from the cooperative's stock, carry and haul rules in the checks
+  change: "Amish's requirement decisions 20A, 21A, 22A and 23C (HPL-DDR-003): 18 mm probe tips; reused search crate at every site and a capstan crate at the host site; PPE from the cooperative; drill-card rules for haulers and the two carrying waves"
+- version: "0.3"
+  date: '2026-10-04'
+  author: Amish Chadha
+  change: "Siting limit for the shared capstan set (decision 3A, HPL-DDR-004): about 500 m walk from the host shed, checked in the timed drills; wording only"
 ---
 
 # HeapLine prototype build plan
@@ -31,7 +35,7 @@ revisions:
 
 *Figure 1. Every component in build order: made parts first, then bought parts.*
 
-One complete site kit: a site box refitted from a reused crate (or the plywood box on skids where no sound crate is found), four crawl boards with eight link plates, six three-section probes, a hand capstan (base frame with a fixed post, drum, drive ratchet, lever head, pawls, bars, bushes, hold-down roller, keeper and stakes), a sheet clamp and a sheet stretcher, plus bought shovels, rope, slings and shackles, lookout kit, lamps and protective equipment. Sixteen components are made: the steel parts by cutting, drilling and welding (MIG or stick), the pawls and ratchets by laser or plasma profile cutting, the bushes by turning acetal, the boards (and the box, where it is made) by cutting, gluing and screwing exterior plywood, and the stretcher by cutting HDPE sheet and riveting webbing. This prototype kit carries its own capstan set, which in service is shared by neighbouring sites (HPL-DDR-003); with new protective equipment and a reused crate its parts cost about USD 1,447 from the bill of materials, or USD 1,599 with the plywood box.
+One search kit for every site, kept in a reused crate refitted on skids, and one capstan set shared by neighbouring sites, kept in its own crate at the host site. Together they are four crawl boards with eight link plates, six three-section probes, a hand capstan (base frame with a fixed post, drum, drive ratchet, lever head, pawls, bars, bushes, hold-down roller, keeper and stakes), a sheet clamp and a sheet stretcher, plus bought shovels, rope, slings and shackles, lookout kit, lamps and protective equipment, which comes from the cooperative's own stock. Seventeen components are made or refitted: the steel parts by cutting, drilling and welding (MIG or stick), the pawls and ratchets by laser or plasma profile cutting, the bushes by turning acetal, the boards by cutting, gluing and screwing exterior plywood, the crates by refitting reused timber crates, and the stretcher by cutting HDPE sheet and riveting webbing. From the bill of materials, the search kit with its crate costs about USD 827 a site and the shared capstan set with its crate about USD 547; the host site, which keeps both, costs about USD 1,374. A shared capstan serves only sites within about 500 m walk of the host shed; farther sites keep their own capstan set or rely on the search kit alone.
 
 ## 2. What changed to make it buildable
 
@@ -46,9 +50,9 @@ One complete site kit: a site box refitted from a reused crate (or the plywood b
 | Shear pin | Not placed | 6 mm pin joining the drive ratchet to the drum's top flange (Figure 12) | The only path for the drive; it limits the rope tension |
 | Pawls | Not drawn | Noses just past a tooth face, pivots along the tangent (Figure 11) | They clear the teeth they ride over |
 | Keeper | None | Collar and cross pin on the post top | Nothing slides off when carried |
-| Probes | Sectional, joint not defined | Spigot joints with R-clips; tube ends bear; blunt 18 mm tip (Figures 6 and 7; 18 mm since HPL-DDR-003) | The push goes through the tube; the tip cannot cut |
+| Probes | Sectional, joint not defined | Spigot joints with R-clips; tube ends bear; blunt 18 mm tip (Figures 6 and 7) | The push goes through the tube; the tip cannot cut |
 | Crawl boards | Loose boards | Boards on two battens joined by pinned link plates (Figure 3) | Boards stay in line on the debris |
-| Site box | A box for the kit | A 1700 x 1020 x 1060 mm box sized so everything packs, capstan upright (Step 11) | The concept box could not hold the capstan or the boards |
+| Crates | A box for the kit | A reused search crate at every site, at least 1604 x 824 x 622 mm inside, and a capstan crate at the host site, at least 904 x 864 x 1042 mm inside, capstan upright (Step 11) | The concept box could not hold the capstan or the boards; one capstan is shared by neighbouring sites (HPL-DDR-003) |
 | Sheet clamp | None | A bolted two-bar clamp with a shackle lug (Figure 24) | Something to grip plastic sheeting |
 
 ## 3. Making the components
@@ -123,7 +127,7 @@ Sizes are in millimetres. Weld with MIG, or with 2.5 mm stick electrodes on the 
 
 ![Figure 7. Joint 3: tip in the bottom section](05-build-plan/joint-03.png)
 
-*Figure 7. Joint 3, cut open. The tip is 1 mm wider than the tube each side, so the tube behind it rubs less, and its smaller face needs less push to start in stiff debris.*
+*Figure 7. Joint 3, cut open. The 18 mm tip is 1 mm wider than the tube each side: small enough to start in stiff debris, still clearing a path for the tube behind it.*
 
 **Check before moving on.** Each probe is 3068 long assembled and straight within 10 mm; the sections of any probe fit any other.
 
@@ -322,43 +326,37 @@ Sizes are in millimetres. Weld with MIG, or with 2.5 mm stick electrodes on the 
 
 **Check before moving on.** The sheet rolls to about 250 diameter and lies flat again.
 
-### 3.15 Site box body
+### 3.15 Search crate body (and the capstan crate)
 
-![Figure 26. Making sketch of the site box body](../cad/drawings/HPL-DWG-115.png)
+![Figure 26. Refit sketch of the search crate body](../cad/drawings/HPL-DWG-115.png)
 
-*Figure 26. Site box body making sketch (HPL-DWG-115), for the plywood box made where no sound crate is found.*
+*Figure 26. Search crate body refit sketch (HPL-DWG-115).*
 
-**What it is and what it is made from.** The box the kit lives in at the shed. First choice: a reused timber shipping crate, or a bought steel job box, with an inside of at least 1664 x 984 x 1042, sound, dry and free of rot or sharp fixings. Where none is found, make the box from 18 mm exterior plywood; 45 x 45 and 70 x 45 treated timber; exterior glue, screws and paint.
+**What it is and what it is made from.** The crate the search kit lives in at each shed. A reused timber shipping crate or lidded pallet box, sound and dry, at least 1604 long, 824 wide and 622 deep inside; 45 x 45 and 70 x 45 treated timber; screws and exterior paint. The host site also keeps a capstan crate, refitted the same way, at least 904 x 864 inside and 1042 deep. Where no crate can be had, a bought steel job box of at least the same inside size will do, at a higher cost.
 
-**How to refit a reused crate.**
+**How to make it.**
 
-1. Check the inside sizes; the packing of Step 11 needs every millimetre of the 1664 x 984 x 1042.
-2. Screw two 70 x 45 skids under the base, 120 in from the long edges, so the base stands off wet ground.
-3. Add 45 x 45 corner battens inside any corner that has none; fix a handle cleat and rope handle to each end.
-4. Fix the EPDM seal strip round the top rim; prime and paint every outside face.
+1. Measure the crate inside. Patch or replace any split or rotten board.
+2. Screw two skids under it, 120 in from the long edges, so it stands off the wet ground.
+3. If it has no corner posts inside, glue and screw 45 x 45 battens into each corner.
+4. Fix a hardwood handle cleat to each end and thread a rope handle through it.
+5. Fix the EPDM seal strip round the top rim; prime and paint every face.
 
-**How to make it, where no crate is found.**
+**Check before moving on.** The kit packs as drawn in HPL-DWG-002 with the lid shut.
 
-1. Cut the base 1700 x 1020 and screw two skids under it, 120 in from the long edges.
-2. Cut two sides 1700 long and two ends to fit between them, all 1042 high; glue and screw them to the base and to 45 x 45 corner battens inside each corner.
-3. Fix a hardwood handle cleat to each end and thread a rope handle through it.
-4. Fix the EPDM seal strip round the top rim; prime and paint every face, cut edges first.
+### 3.16 Search crate lid
 
-**Check before moving on.** The diagonals of the top are equal within 3 mm.
+![Figure 27. Refit sketch of the search crate lid](../cad/drawings/HPL-DWG-116.png)
 
-### 3.16 Site box lid
+*Figure 27. Search crate lid refit sketch (HPL-DWG-116).*
 
-![Figure 27. Making sketch of the site box lid](../cad/drawings/HPL-DWG-116.png)
+**What it is and what it is made from.** The crate's own lid, with a skirt of 48 x 18 treated batten screwed under its edges all round, 2 clear of the body.
 
-*Figure 27. Site box lid making sketch (HPL-DWG-116).*
-
-**What it is and what it is made from.** The crate's own lid, or for the plywood box 18 mm exterior plywood: a top 1740 x 1060. Either way a skirt 48 deep all round, 2 clear of the body.
-
-**How to make it.** For a crate lid, screw treated timber battens round its edge as the skirt. For the plywood lid, glue and screw the skirt under the top's edges. Then paint; fit three strap hinges on the back, the hasp on the front and a folding steel stay; apply the drill card inside and the stop rule outside.
+**How to make it.** Screw the skirt under the lid's edges; paint; fit three strap hinges on the back, the hasp on the front and a folding steel stay; apply the drill card inside and the stop rule outside. Refit the capstan crate's lid the same way.
 
 **How it fits the parts next to it.**
 
-![Figure 28. Joint 11: lid over the box rim](05-build-plan/joint-11.png)
+![Figure 28. Joint 11: lid over the crate rim](05-build-plan/joint-11.png)
 
 *Figure 28. Joint 11, cut open at the back. The lid sits on the seal and its skirt laps 48 down over the body, so rain runs off outside.*
 
@@ -368,14 +366,15 @@ Sizes are in millimetres. Weld with MIG, or with 2.5 mm stick electrodes on the 
 
 Buy to specification, not brand. Line numbers are those of the bill of materials.
 
-- **Box hardware (line 3).** Three 300 galvanised strap hinges, a heavy hasp and staple, a shrouded weatherproof combination padlock, a folding steel lid stay, 5.5 m of 10 x 3 EPDM seal, rope for handles.
+- **Crate hardware (lines 3 and 31).** For each crate: three 300 galvanised strap hinges, a heavy hasp and staple, a shrouded weatherproof combination padlock, a folding steel lid stay, 5.0 m of 10 x 3 EPDM seal, rope for handles.
 - **Probe pins (line 7).** R-clips for a 5 mm hole on short lanyards.
 - **Shovels (line 8).** Four long-handled round-point steel shovels about 1.45 m long.
 - **Shear pins (line 18).** 6 mm S275 bright mild steel bar cut 32 long with split pins; never hardened steel and never a bolt.
 - **Club hammer (line 19).** 1.8 kg.
 - **Rope (line 20).** 30 m of 14 mm polyester double braid, minimum breaking strength at least 40 kN, with one eye splice and thimble at the load end.
 - **Slings and shackles (line 21).** Two polyester round slings WLL 2,000 kg (3 m and 2 m), three bow shackles WLL 2,000 kg with 19 mm pins, a tree protector strap.
-- **Lookout kit, lighting, PPE, cards, bags, fasteners and paint (lines 24 to 30).** As listed in the bill of materials; the lamps take AA alkaline cells, and no lithium cells go in the box. The protective equipment is issued from the cooperative's own stock to the specification of line 26 and stays in the box. The drill card carries the carry rule (four people with the search kit first, then three with the capstan set) and the haul rule (four haulers whenever the stretcher crosses debris, two only along the boards).
+- **Lookout kit, lighting, PPE, cards, bags, fasteners and paint (lines 24 to 30).** As listed in the bill of materials; the lamps take AA alkaline cells, and no lithium cells go in the crates. The PPE comes from the cooperative's own stock and is kept in its bag in the search crate.
+- **Drill card (line 27).** Besides the stop rule, it carries two rules: the kit goes out in two waves (four people with the search kit first, then three with the capstan set from the host site), and the stretcher is hauled by four people whenever it crosses debris, by two only along the boards.
 
 ## 4. Putting it together
 
@@ -441,17 +440,17 @@ Push the middle section over the tip section's spigot until the tube ends meet a
 
 Butt two boards end to end and drop a link plate into each pair of holes.
 
-### Step 11: pack the site box
+### Step 11: pack the search crate and the capstan crate
 
 ![Step 11](05-build-plan/step-11.png)
 
-Pack in this order: the four boards flat at the back; the capstan upright at the front right with its bars off and its stakes out; the rope bag, the slings and clamp bag, the stakes and hammer, and the lookout, lamps and PPE bags at the front left; then on the boards the shovels, the probe bag, the bars and the rolled stretcher. Close the lid and lock it.
+Search crate, at every site: the four boards flat at the back, then the shovels and the probe bag on them; the lookout and lamps bag and the PPE bag along the front, with the rolled stretcher on top of them. Capstan crate, at the host site only: the capstan upright at the back with its bars off and its stakes out; the rope bag with the slings and clamp bag on it, the stakes and hammer, and the two bars standing in the corner, along the front. Close each lid and lock it.
 
 ### Step 12: lookout posted, boards laid
 
 ![Step 12](05-build-plan/step-12.png)
 
-On the practice heap, post the lookout first on firm ground to the side, with the whistle and the safe-zone sign. Lay the boards out from firm ground and link them.
+The kit goes out in two waves. Four people carry the search kit first, about 21.5 kg each; a second group of three brings the capstan set from the host site, about 21.7 kg each, and it is not needed until the probe line is working. On the practice heap, post the lookout first on firm ground to the side, with the whistle and the safe-zone sign. Lay the boards out from firm ground and link them.
 
 ### Step 13: probe line from the boards
 
@@ -469,7 +468,7 @@ Set the capstan on firm level ground to the side of the boards, its roller towar
 
 ![Step 15](05-build-plan/step-15.png)
 
-Clamp the sheet clamp on the sheeting and shackle the rope's eye to its lug. Lead the rope back under the roller, take four turns round the drum and hand the tail to the tailer. Lay the stretcher beside the boards. Clear the rope line (section 6) before the first stroke.
+Clamp the sheet clamp on the sheeting and shackle the rope's eye to its lug. Lead the rope back under the roller, take four turns round the drum and hand the tail to the tailer. Lay the stretcher beside the boards. Clear the rope line (section 6) before the first stroke. When a casualty is moved, four people haul the stretcher whenever it crosses debris; two may haul it only along the boards.
 
 ## 5. First checks
 
@@ -480,16 +479,17 @@ These are listed here and recorded in a TRL 4 test report, not in this plan.
 | Check | Requirement | How | Pass when |
 | --- | --- | --- | --- |
 | Deployment drill | R1 | Timed from a whistle 100 m from the shed | First probe in within 5 min |
-| Probe reach | R2 | 18 mm tip probes pushed by one and by two people on a test heap of mixed waste, loose and compacted | Two people reach 2.5 m in the compacted heap |
+| Capstan wave drill | R8 | Timed from the alarm, the three-person capstan wave walks from the host shed to a site about 500 m away | Capstan at the site within about 15 min (sets the 500 m sharing limit) |
+| Probe reach | R2 | 18 mm tip probes pushed by one and by two people on a test heap of mixed waste, loose and compacted | Two people reach 2.5 m in compacted waste; record whether the sleeve friction is higher than assumed |
 | Board sinkage | R3 | 100 kg on a board on loose fill; then across a 0.8 m gap | Sinkage under 50 mm; no cracking |
 | Capstan pull | R4 | Pull through a load cell with four people | 5 kN reached |
 | Shear pin release | R10 | Pull against a fixed stop through a load cell, slowly | Pin shears between 5.1 and 7.6 kN; a pawl holds the drum |
 | Holding | R11 | At working pull, let go of the bars | Drum stops within one tooth |
 | Proof load of capstan and sling | R10 | CalRig or a load cell, held 1 min at 8 kN, nobody in the rope line | No movement over 2 mm, no damage |
-| Stretcher haul | R5 | 100 kg manikin over 30 m: four haulers on debris, two along the boards | Each hauler 200 N or less; record force and time |
+| Stretcher haul | R5 | 100 kg manikin over 30 m: four haulers on debris, two along the boards | Record force and time; each hauler within 200 N |
 | Stop rule | R6 | Ask every drill participant after the drill | All six signals named |
-| Storage | R7 | Inspect after 12 months in the box | Everything usable |
-| Weighing | R8 | Weigh every carried item and each person's load in the two waves | Each item and each carrier's load 25 kg or less |
+| Storage | R7 | Inspect after 12 months in the crates | Everything usable |
+| Weighing and carry | R8 | Weigh every carried item; time both waves | Each 25 kg or less; each carrier 25 kg or less in each wave |
 
 ## 6. Safety stops
 
@@ -502,23 +502,23 @@ Work stops at each of these points until what is listed is true.
 5. **Whenever hauling stops.** The tail is made fast on the cleat and the pawls are holding before anyone lets go.
 6. **After a shear pin breaks.** Stop. Slack the rope by lifting the pawls one tooth at a time with the bars held. Find out why it broke; fit a new pin of the same 6 mm S275 bar from the tag chain.
 7. **On any stop signal.** Everyone leaves the debris along the boards to the safe zone at once, whatever they are doing.
-8. **At the end of each drill and at each monthly inspection.** Inspect the rope, splice, slings, shackles, pawls, pins, boards and probes; replace anything cut, cracked, bent or worn; check the lamp cells, the padlock and that the protective equipment issued from stock is still in the box.
+8. **At the end of each drill and at each monthly inspection.** Inspect the rope, splice, slings, shackles, pawls, pins, boards and probes; replace anything cut, cracked, bent or worn; check the lamp cells, the padlocks and that the PPE taken from the cooperative's stock is all there.
 
 ## 7. Tools, skills and workspace
 
 - MIG welder (or a small stick welder with 2.5 mm electrodes) and a person who can weld 2 and 3 mm tube square; welding screen, gloves and mask.
 - Angle grinder, metal saw, pillar drill with bits to 22 mm and a 61 mm hole saw; a lathe or a machine shop for the probe tips and the acetal bushes.
 - Laser or plasma profile cutting for the ratchets and pawls, from a local cutter.
-- Circular saw or table saw, jigsaw, drill and screwdriver for the plywood; clamps; exterior glue.
+- Circular saw or table saw, jigsaw, drill and screwdriver for the plywood and the crate refit; clamps; exterior glue.
 - Rivet tool for the stretcher; spanners for M12; R-clip pliers.
-- A flat floor or welding table about 1.2 x 1.0 m; a floor 2 x 2 m for the box; two people for the drum, frame and box.
+- A flat floor or welding table about 1.2 x 1.0 m; a floor 2 x 2 m for refitting the crates; two people for the drum, frame and crates.
 - Rope work: the eye splice in double braid made by a rigger, or bought made.
 
 ## 8. Where the numbers come from
 
 - `cad/src/model.py`: the parametric model, its constructability and packing checks, and the STEP and STL files in `cad/step` and `cad/stl`.
-- `cad/drawings/HPL-DWG-001` and `HPL-DWG-002`: general arrangement of the capstan and the packed site box; `HPL-DWG-101` to `HPL-DWG-116`: making sketches.
+- `cad/drawings/HPL-DWG-001` and `HPL-DWG-002`: general arrangement of the capstan and the packed search and capstan crates; `HPL-DWG-101` to `HPL-DWG-116`: making sketches.
 - `docs/04-calcs/01-sizing.md` and `docs/04-calcs/sizing.py` (HPL-CAL-001): forces, strengths, masses, times and costs.
 - `bom/bom.csv`: parts, specifications and prices.
-- `docs/decisions/0002-design-for-construction.md` (HPL-DDR-002): the changes in section 2.
+- `docs/decisions/0002-design-for-construction.md` (HPL-DDR-002): the changes in section 2; `docs/decisions/0003-requirement-decisions.md` (HPL-DDR-003): the probe tip, the crates, the shared capstan set and the drill-card rules.
 - `cad/src/build_plan_media.py`: every picture in this plan.

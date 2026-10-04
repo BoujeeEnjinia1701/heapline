@@ -16,12 +16,12 @@ revisions:
 - version: "0.2"
   date: '2026-10-03'
   author: Amish Chadha
-  change: Round 2 requirement decisions (HPL-DDR-003); 18 mm probe tip, drill card haul rule, two carrying waves, shared capstan set with a reused crate box and PPE from stock; R2, R5 and R8 met on paper, R9 still not met
+  change: "Amish's requirement decisions 20A, 21A, 22A and 23C (HPL-DDR-003): 18 mm probe tip; four haulers on debris; two carrying waves; shared capstan set, reused crates and PPE from the cooperative; R9 restated"
 ---
 
 # HeapLine sizing calculations
 
-The constructable design, with Amish's round 2 decisions of 2026-10-03 (HPL-DDR-003), meets R1, R2, R3, R4, R5, R8, R10 and R11 on paper. R2 is met with the 18 mm probe tip when two people push in stiffer debris, to be confirmed on a test heap at TRL 4; R5 is met under the drill card rule of four haulers on debris and two only along the boards; R8 is met for each of two carrying waves. R9 (cost) is still not met at USD 830 a site with a shared capstan set. Every figure below is printed by `docs/04-calcs/sizing.py` with the tag shown in brackets, from the geometry in `cad/src/model.py` and the prices in `bom/bom.csv`. These are first-principles estimates for a paper proof of concept, not test results.
+The constructable design meets R1, R3, R4, R10 and R11 on paper. After Amish's requirement decisions of 2026-10-03 (HPL-DDR-003; Amish: "i agree with all the 46 recommendations you provided. please proceed."), R2 (probe depth) is met on paper with the 18 mm tip, R5 (casualty transport) is met under the drill-card rule of four haulers on debris, R8 (portable) is met by carrying the kit in two waves, and R9 (cost) is met as restated, with one capstan set shared by neighbouring sites. Every figure below is printed by `docs/04-calcs/sizing.py` with the tag shown in brackets, from the geometry in `cad/src/model.py` and the prices in `bom/bom.csv`. These are first-principles estimates for a paper proof of concept, not test results.
 
 > **Safety:** The capstan stores energy in a loaded rope. Every capstan part is sized on an 8 kN design tension, above the top of the shear pin's release band, and the rope, slings and anchor are chosen so the shear pin is always the weakest link. Searches take place on unstable ground; nothing here makes a dumpsite safe.
 
@@ -40,16 +40,14 @@ The constructable design, with Amish's round 2 decisions of 2026-10-03 (HPL-DDR-
 | Probe resistance, loosened debris | Cone 0.4 MPa, sleeve friction 1 kPa | No published data for dumpsite slides; a central case |
 | Probe resistance, stiffer debris | Cone 1.0 MPa, sleeve friction 3 kPa | A compacted or wet case |
 | Downward push on a probe | 350 N one person, 650 N two | Sustained, leaning on the T handle |
-| Sleeve friction with the 18 mm tip | Unchanged from the 22 mm tip | The tip is now 1 mm wider than the tube each side, not 3 mm; to be confirmed on a test heap at TRL 4 |
 | Subgrade modulus of slide debris | 0.10 MN/m³ | Very loose, low side |
 | Searcher on a board | 100 kg with a 1.5 dynamic factor | Kneeling and shifting weight |
 | Timber battens | C16: 16 MPa bending, 8 GPa modulus | Treated softwood |
 | Stretcher friction | 0.5 on debris, 0.3 on boards | HDPE on mixed waste and on plywood |
 | Sustained pull per hauler | 200 N | Strap over the shoulder, 30 m |
 | Carry limit per person | 25 kg | 100 m over rough ground |
-| Carrying | Two waves: four people with the search kit, then three with the capstan set | Drill card rule, HPL-DDR-003 |
-| Per-site cost | Lines bought for every site only; the capstan set is shared by neighbouring sites and PPE comes from the cooperative's stock | HPL-DDR-003; the cost basis of each line is in `bom/bom.csv` |
 | Walking speeds | 2.5 m/s running empty, 0.8 m/s carrying | Rough ground |
+| Opening the capstan crate and sharing out its load | 60 s | Three people; estimate for the capstan wave from the host site |
 
 ## A. Hand capstan
 
@@ -69,13 +67,14 @@ The capstan meets R4 with four people, and its shear pin bounds the rope tension
 
 ## B. Probes
 
-R2 is met on paper with the 18 mm tip (HPL-DDR-003): one person in loosened debris and two people in stiffer debris reach the full 2.6 m usable depth.
+R2 is met on paper with the 18 mm tip on all six probes (decision 20A): one person reaches the full depth in loosened debris and two people in stiffer debris. The sleeve friction assumption must be confirmed on a test heap at TRL 4.
 
 - Loosened debris: tip 102 N, friction 50 N per metre, 227 N to push to 2.5 m; one person reaches the full 2.6 m usable depth [B1c].
-- Stiffer debris: tip 254 N, friction 151 N per metre, 631 N to push to 2.5 m. Two people reach the full 2.6 m; one person reaches 0.6 m, held back by the friction along the probe [B1s].
+- Stiffer debris: tip 254 N, friction 151 N per metre, 631 N to push to 2.5 m. Two people reach the full 2.6 m; one person reaches 0.6 m, because a single person's push is used up by the tip and the friction [B1s].
 - The 16 x 2.0 tube buckles at 4,558 N with 1 m free, 1,139 N with 2 m free and 506 N with 3 m free (pinned ends) [B2-1, B2-2, B2-3].
-- The probe is 3,068 mm long assembled and weighs 3.07 kg; the 18 mm tip has a 3 mm rounded point and is 1 mm wider than the tube each side; usable depth is about 2.6 m with the handle at chest height above the surface [B3].
-- For comparison, the 22 mm tip used before HPL-DDR-003 needed 380 N to start in stiffer debris: one person could not start the probe and two reached 1.8 m [B4]. The 18 mm result holds only if the sleeve friction does not rise as the tip's clearance over the tube falls from 3 mm to 1 mm a side; that is the condition of the decision, checked on a test heap at TRL 4.
+- The probe is 3,068 mm long assembled and weighs 3.07 kg; the 18 mm tip has a 3 mm rounded point; usable depth is about 2.6 m with the handle at chest height above the surface [B3].
+- For comparison, the earlier 22 mm tip let one person reach nothing in stiffer debris and two people 1.8 m [B4].
+- The tip now stands 1 mm proud of the 16 mm tube each side, against 3 mm before. The results assume the sleeve friction does not rise as that clearance falls; the test heap at TRL 4 must confirm it [B5].
 
 ## C. Crawl boards
 
@@ -88,7 +87,7 @@ R3 is met on paper.
 
 ## D. Sheet stretcher
 
-R5 is met on paper under the drill card rule (HPL-DDR-003): four haulers whenever the stretcher crosses debris, two only along the boards, where each pulls 153 N, within the 200 N sustained pull.
+R5 is met under the drill-card rule of decision 21A: four haulers whenever the stretcher crosses debris, two only along the boards (153 N each). Two haulers on loose debris would need 255 N each, more than the 200 N sustained pull assumed, which is why the rule exists.
 
 *Table 2. Haul force for a 100 kg casualty on the 3.9 kg stretcher [D].*
 
@@ -122,20 +121,19 @@ Four M12 wing bolts at 2.5 kN each, with two faces at a friction coefficient of 
 | Sheet stretcher | 3.9 kg |
 | Lookout kit, lighting, PPE, bags and cards | 13.5 kg |
 
-- The heaviest carried item is the capstan frame with its post and roller, 21.2 kg; the site box (83 kg body, 21 kg lid) stays at the shed [F1].
+- The heaviest carried item is the capstan frame with its post and roller, 21.2 kg. The search crate (about 53 kg body and 17 kg lid as modelled in 18 mm boards) stays at the shed; the capstan crate (about 53 kg and 11 kg) stays at the host site [F1]. A reused crate's own mass will differ.
 - The carried kit is 151 kg: 86 kg for the search wave and 65 kg for the capstan wave. Four people carrying everything at once would take 37.7 kg each [F2].
-- R8 is met on paper in two waves (HPL-DDR-003): four people carry the search wave at 21.5 kg each, and a second group of three brings the capstan wave at 21.7 kg each, both under the 25 kg carry limit [F2a]. The capstan is not needed for the first probe line, so R1 is unchanged. Where the shared capstan set is kept at a neighbouring site, its wave comes from that site's shed and arrives later; the distance is an open decision.
-- Deployment from the alarm to the first probe line: 40 s to run 100 m to the shed, 30 s to open, 125 s to carry back, 20 s to post the lookout and 60 s to lay the first boards while the probes are joined: 275 s, 4.6 min [F3].
+- Two waves (decision 22A): four people carry the search wave first, 21.5 kg each; a second group of three brings the capstan set, 21.7 kg each, under the 25 kg limit. R8 is met in two waves [F2b].
+- Deployment from the alarm to the first probe line: 40 s to run 100 m to the shed, 30 s to open, 125 s to carry back, 20 s to post the lookout and 60 s to lay the first boards while the probes are joined: 275 s, 4.6 min [F3]. The capstan is not needed for the first probe line, so R1 is unchanged.
+- The capstan set is kept at the host site (decision 23C). Allowing 60 s to open its crate and share out the load, the capstan wave arrives 3.8 min after the alarm from 100 m, 9.2 min from 300 m, 14.8 min from 500 m and 28.5 min from 1 km [F4]. Amish decided on 2026-10-04 (3A, HPL-DDR-004) that a shared capstan serves only sites within about 500 m walk of the host shed, where it arrives in about 14.8 min; the TRL 4 timed drills check this.
 
-## G. Cost
+Decision 23C splits the kit into a search kit that every site keeps and one capstan set shared by neighbouring sites, puts each in a reused crate (or a bought steel job box where none can be had), and takes the PPE from the cooperative's own stock.
 
-R9 is not met. Under HPL-DDR-003 one capstan set is shared by neighbouring sites, the site box is a reused crate refitted, and PPE is issued from the cooperative's own stock; each BOM line carries its cost basis.
-
-- Parts bought for each site: USD 830.00. The reused crate box with its hardware is USD 101.00 (USD 253.00 for the made plywood box before), lighting USD 95.00, and PPE from stock would be USD 168.00 if bought new [G1].
-- The shared capstan set with its rope, slings and clamp is USD 449.00 for each group of sites. With its share the cost is USD 1,279.00 a site if not shared, USD 1,054.50 shared by two, USD 979.67 by three and USD 942.25 by four [G1-1 to G1-4].
-- Every line at its listed price, as for one prototype kit with its own capstan set and new PPE, is USD 1,447.00 [G1b].
+- The search kit with its crate costs USD 827.00 per site: crate and hardware USD 98.00, lighting USD 95.00, PPE USD 0 from the cooperative's stock (about USD 168 if bought) [G1].
+- The shared capstan set (capstan, rope, slings, clamp and its own crate) costs USD 547.00 for each group of neighbouring sites: USD 273.50 a site if two share it, USD 182.33 if three [G1b].
 - The search core (boards, links, probes, pins, shovels, stretcher, lookout kit and cards) is USD 526.00 [G2].
-- Value-engineering target: USD 1,800. Estimated cost of the constructable design: USD 830.00 a site plus a share of the USD 449.00 capstan set (USD 970.00 under the target before the share) [G3]. Against R9's USD 400 a site it is still not met.
+- R9 as restated (HPL-REQ-001 v0.4): USD 827.00 per site search kit against USD 850, USD 23.00 under [G2b]. A bought steel job box in place of the reused crate (about USD 300 to 600) would put the site over the restated target.
+- Value-engineering target: USD 1,800. Estimated cost of the constructable design: USD 1,374.00 (USD 426.00 under the target), for the host site: its search kit and the shared capstan set [G3].
 
 ## Results against the requirements
 
@@ -147,10 +145,10 @@ R9 is not met. Under HPL-DDR-003 one capstan set is shared by neighbouring sites
 | R2 | 18 mm tip: loosened debris 2.6 m by one person; stiffer debris 0.6 m for one, 2.6 m for two | Met on paper; confirm on a test heap at TRL 4 |
 | R3 | 44 mm sinkage; bridges a 0.8 m void at 4.0 MPa | Met on paper |
 | R4 | 5 kN at 114 N each for four people; pin releases at 5.1 to 7.6 kN | Met on paper |
-| R5 | 127 N each for four on level debris; 153 N each for two along the boards | Met on paper under the drill card rule |
+| R5 | 127 N each for four on level debris; 153 N each for two on the boards | Met with the drill-card rule: four haulers on debris, two only along the boards |
 | R6 | Stop rule printed on the lid and pocket cards | Not verifiable at TRL 3 |
-| R7 | Weather-resistant materials if the reused crate is sound and painted; no lithium cells | Met on paper by material choice |
-| R8 | Heaviest item 21.2 kg; two waves: 21.5 kg each for four, then 21.7 kg each for three | Met on paper for each wave |
-| R9 | USD 830 a site plus a share of the USD 449 capstan set | Not met |
+| R7 | Weather-resistant materials; no lithium cells | Met on paper by material choice |
+| R8 | Heaviest item 21.2 kg; search wave 21.5 kg each for four, capstan wave 21.7 kg each for three | Met in two waves |
+| R9 | USD 827 per site search kit against USD 850; shared capstan set USD 547 per group of sites | Met as restated |
 | R10 | Pin releases at 6.4 kN nominal, 7.6 kN at most; rope factor 4.5 at 8 kN | Met on paper |
 | R11 | Two holding pawls; one takes the design tension | Met on paper |

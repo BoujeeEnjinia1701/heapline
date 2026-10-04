@@ -19,19 +19,17 @@ import build_views as bv  # noqa: E402
 from build_views import Part  # noqa: E402
 from build123d import Compound, Pos, Rot, Torus  # noqa: E402
 from model import (PARAMS as P, derived, capstan_parts, probe_parts, board, link_plate, box_parts,  # noqa: E402
-                   stretcher, sheet_clamp, shovel, packed_contents, build_components, context_shapes,
+                   stretcher, sheet_clamp, shovel, packed_contents, packed_capstan, build_components, context_shapes,
                    bx, zcyl, ycyl, xcyl, fuse, CAPSTAN_KEYS)
 
 OUT = ROOT / "docs" / "05-build-plan"
 DWG = ROOT / "cad" / "drawings"
 DATE = "2026-10-03"
-# making sketches changed by the round 2 requirement decisions (HPL-DDR-003, Amish, 2026-10-03)
-REV_P2 = {"HPL-DWG-103": "HPL-DDR-003: 18 mm probe tip", "HPL-DWG-115": "HPL-DDR-003: made only where no reused crate is found",
-          "HPL-DWG-116": "HPL-DDR-003: made only where no reused crate is found"}
 D = derived(P)
 CAP = capstan_parts(P)
 PR = probe_parts(P)
 BX = box_parts(P)
+CBX = box_parts(P, which="cap_box")
 ST = stretcher(P)
 CL = sheet_clamp(P)
 L_B = P["board"][0]
@@ -80,14 +78,15 @@ def overview():
         ("Ground stakes (4)", CAP["stakes"] & bx(-2000, 2000, -2000, 2000, 0, 200), "stakes", (0, 0, 150)),
         ("Sheet clamp", Pos(1600, -1300, 0) * (CL["clamp_bars"] + CL["clamp_bolts"]), "clamp_bars", (0, 0, 0)),
         ("Sheet stretcher", Pos(-1200, -1700, 0) * (ST["sheet"] + ST["straps"]), "sheet", (0, 0, 0)),
-        ("Site box body", Pos(-5600, 900, 0) * BX["box_body"], "box_body", (0, 0, 0)),
-        ("Site box lid", Pos(-5600, 900, 0) * BX["box_lid"], "box_lid", (0, 0, 700)),
+        ("Search crate body (reused, refitted)", Pos(-5600, 900, 0) * BX["box_body"], "box_body", (0, 0, 0)),
+        ("Search crate lid (refitted)", Pos(-5600, 900, 0) * BX["box_lid"], "box_lid", (0, 0, 600)),
+        ("Capstan crate, host site only", Pos(-5600, -900, 0) * (CBX["box_body"] + CBX["box_lid"]), "box_body", (0, 0, 0)),
         ("Shear pins, bought", CAP["shear_pin"], "shear_pin", (0, 400, 1900)),
         ("Shovels (4), bought", Pos(1800, 2200, 0) * shovel(P), "shovel", (0, 0, 0)),
     ]
     parts = [part(n, s, k, e) for n, s, k, e in items]
     bv.overview(parts, OUT / "overview.png", "HeapLine prototype: every component in build order",
-                subtitle="Made parts first (1 to 16), then bought parts; rope, slings and bags not shown",
+                subtitle="Made or refitted parts first (1 to 17), then bought parts; rope, slings and bags not shown",
                 key=True, size=(11, 7.5))
 
 
@@ -119,10 +118,10 @@ def sheets():
           "Galvanise or paint",
           "Make 8 (two per joint, four spare). Check: drops into two butted boards"]),
         ("HPL-DWG-103", "Probe sections: making sketch", Compound(list(PR.values())), "probe_mid_section", [],
-         f"16 x 2.0 steel tube; 11.5 and {P['probe_tip'][0]:.0f} mm bright bar; 26.9 x 2.6 tube", probe_side,
+         "16 x 2.0 steel tube; 11.5 and 18 mm bright bar; 26.9 x 2.6 tube", probe_side,
          ["Three sections of 16 x 2.0 tube, each 1000 long, ends square",
           "Spigot 11.5 dia x 120 into the top of the tip and middle sections, 60 in; plug weld",
-          f"Tip from {P['probe_tip'][0]:.0f} bar: cone 35 long to a 3 mm rounded point, 20 parallel, 30 x 12 spigot",
+          "Tip from 18 bar: cone 35 long to a 3 mm rounded point, 20 parallel, 30 x 12 spigot",
           "T handle 26.9 x 2.6 x 450 welded square across the top section",
           "5 mm cross hole 30 above each joint, through tube and spigot together",
           "Paint a band every 250 from the tip; R-clip on a lanyard at each joint",
@@ -210,20 +209,19 @@ def sheets():
           "Three straps with cam buckles at 550 spacing; head haul strap",
           "Rivet straps with large washers both sides",
           "Check: rolls to 250 dia; a 100 kg dummy rides on it"]),
-        ("HPL-DWG-115", "Site box body: making sketch", BX["box_body"], "box_body", [Part("lid", BX["box_lid"], "#D1D5DB")],
-         "18 mm exterior plywood; 45 x 45 and 70 x 45 mm treated timber", None,
-         ["Made only where no sound reused crate is found (HPL-DDR-003)",
-          "Outside 1700 x 1020; sides 1060 high above the skids",
-          "Base on two skids 70 x 45, 120 in from the long edges",
-          "Corner battens 45 x 45 inside each corner; glue and screw",
-          "Hardwood handle cleats on each end; rope handles through them",
-          "Seal strip on the rim; prime and paint every face",
-          "Check: diagonals within 3 mm; lid sits evenly on the seal"]),
-        ("HPL-DWG-116", "Site box lid: making sketch", BX["box_lid"], "box_lid", [Part("body", BX["box_body"], "#D1D5DB")],
-         "18 mm exterior plywood", None,
-         ["Made only where no sound reused crate is found (HPL-DDR-003)",
-          "Top 1740 x 1060 x 18; skirt 48 deep all round",
-          "Skirt 2 mm clear of the body on every side",
+        ("HPL-DWG-115", "Search crate body: refit sketch", BX["box_body"], "box_body", [Part("lid", BX["box_lid"], "#D1D5DB")],
+         "Reused timber crate; 45 x 45 and 70 x 45 mm treated timber", None,
+         [f"Crate inside at least {P['box'][0] - 36:.0f} x {P['box'][1] - 36:.0f}, {P['box'][2] - 18:.0f} deep",
+          "Sound, dry boards; replace or patch any split board",
+          "Screw two skids 70 x 45 under it, 120 in from the long edges",
+          "Corner battens 45 x 45 inside each corner if it has none",
+          "Handle cleats on each end; rope handles; seal on the rim",
+          "Capstan crate (line 31): same refit, inside 904 x 864 x 1042",
+          "Check: the kit packs as HPL-DWG-002; lid sits on the seal"]),
+        ("HPL-DWG-116", "Search crate lid: refit sketch", BX["box_lid"], "box_lid", [Part("body", BX["box_body"], "#D1D5DB")],
+         "The crate's own lid; 48 x 18 mm treated batten", None,
+         ["Lid at least 40 larger than the body each way",
+          "Skirt 48 deep all round, 2 mm clear of the body",
           "Three strap hinges on the back, hasp on the front, folding stay",
           "Drill card inside, stop rule outside",
           "Check: closes over the seal; padlock fits the hasp"]),
@@ -232,8 +230,6 @@ def sheets():
         nbs = nb if nb else []
         kw = {"view_shape": vshape} if vshape is not None else {}
         nb_use = [n for n in (nbs if nbs else probe_all if key.startswith("probe") else []) if n.name != key][:12]
-        if dwg in REV_P2:
-            kw.update(rev="P2", revisions=[("P1", "Making sketch for the prototype build plan", DATE, "AC"), ("P2", REV_P2[dwg], DATE, "AC")])
         bv.component_sheet(Part(title, shape, COL[key]), nb_use, "HeapLine", dwg, title, mat, notes, DATE,
                            out_dir=str(DWG), **kw)
         print("sheet", dwg)
@@ -255,9 +251,9 @@ def joints(only=None):
               part("R-clip pin, 5 mm", crop(PR["probe_pins"], *r2), "probe_pins")],
              OUT / "joint-02.png", "Joint 2: probe sections on their spigot", "Cut open: tube ends bear on each other; the pin only stops them pulling apart", cut="-X", elev=12)
     r3 = (-30, 30, -30, 30, -5, 130)
-    bv.joint([part(f"Tip, {P['probe_tip'][0]:.0f} mm", crop(PR["probe_tip_section"], -30, 30, -30, 30, -5, 56), "probe_tip_section"),
+    bv.joint([part("Tip, 18 mm", crop(PR["probe_tip_section"], -30, 30, -30, 30, -5, 56), "probe_tip_section"),
               part("Bottom of the tip section tube", crop(PR["probe_tip_section"], -30, 30, -30, 30, 56, 130), "probe_mid_section")],
-             OUT / "joint-03.png", "Joint 3: tip in the bottom section", f"Cut open: 12 mm spigot 30 deep, plug welded; tip {(P['probe_tip'][0] - P['probe_tube'][0]) / 2:.0f} mm wider than the tube each side", cut="-X", elev=12)
+             OUT / "joint-03.png", "Joint 3: tip in the bottom section", "Cut open: 12 mm spigot 30 deep, plug welded; tip 1 mm wider than the tube each side", cut="-X", elev=12)
     r4 = (-80, 80, -120, 120, -5, 120)
     bv.joint([part("Centre member 100 x 40 x 4", crop(CAP["frame"], -50, 50, -120, 120, -5, 41), "frame"),
               part("Post 60.3 x 5.0", crop(CAP["frame"], -31, 31, -31, 31, 41, 120) + crop(CAP["frame"], -31, 31, -31, 31, -1, 40), "drum")],
@@ -310,10 +306,10 @@ def joints(only=None):
              OUT / "joint-10.png", "Joint 10: sheet clamp on plastic sheeting", "Sheet between the flats; wing nuts hand tight; shackle on the lug")
     Lx, W, H = P["box"]
     rb = (-200, 200, W / 2 - 80, W / 2 + 60, 45 + H - 140, 45 + H + 40)
-    bv.joint([part("Box back panel and corner batten", crop(BX["box_body"], *rb), "box_body"),
+    bv.joint([part("Crate back and corner batten", crop(BX["box_body"], *rb), "box_body"),
               part("Lid top and skirt", crop(BX["box_lid"], *rb), "box_lid"),
               part("Seal strip and strap hinge", crop(BX["box_hardware"], *rb), "box_hardware")],
-             OUT / "joint-11.png", "Joint 11: lid over the box rim", "Cut open: the skirt laps 48 mm over the body, 2 mm clear; seal on the rim", cut="+X", elev=10, azim=-70)
+             OUT / "joint-11.png", "Joint 11: lid over the crate rim", "Cut open: the skirt laps 48 mm over the body, 2 mm clear; seal on the rim", cut="+X", elev=10, azim=-70)
 
 
 # ----------------------------------------------------------------- steps
@@ -380,14 +376,16 @@ def _workshop_steps(n):
             label_done=True, size=(9, 5))
     n += 1
     pk = packed_contents(P)
-    body = Part("Site box body", BX["box_body"], COL["box_body"])
-    order = list(pk)
+    pc = packed_capstan(P)
+    dx = P["box"][0] / 2 + P["cap_box"][0] / 2 + 500.0
+    body = [Part("Search crate body", BX["box_body"], COL["box_body"]),
+            Part("Capstan crate body (host site)", Pos(dx, 0, 0) * CBX["box_body"], COL["box_lid"])]
     new = []
-    for k_, nm in enumerate(order):
-        new.append(Part(nm, pk[nm], "#0F766E" if "Capstan" in nm else ("#B45309" if "boards" in nm else "#9CA3AF"), None,
+    for nm, sh_ in list(pk.items()) + [(k_, Pos(dx, 0, 0) * v_) for k_, v_ in pc.items()]:
+        new.append(Part(nm, sh_, "#0F766E" if "Capstan" in nm else ("#B45309" if "boards" in nm else "#9CA3AF"), None,
                         (0, 0, 900)))
-    bv.step([body], new, OUT / f"step-{n:02d}.png", "Step 11: pack the site box",
-            "Boards at the back, capstan front right, bags front left, long items on the boards", label_done=False, size=(9, 6.5), pull=0.6)
+    bv.step(body, new, OUT / f"step-{n:02d}.png", "Step 11: pack the search crate and the capstan crate",
+            "Search crate: boards at the back, bags in front. Capstan crate (host site): capstan at the back", label_done=False, size=(9, 6.5), pull=0.6)
     return n
 
 
