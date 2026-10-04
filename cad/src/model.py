@@ -23,7 +23,8 @@ Constructable design, 2026-10-03 (HPL-DDR-002, decided under Amish's pre-approva
     lever head, held by two pawls on a ratchet ring at its foot, with a 6 mm shear pin between the
     drive ratchet and the drum that limits rope tension to about 6.3 kN; the rope leaves under a
     hold-down roller near the ground and the anchor sling pulls from an eye at the same height;
-    probes are three 1 m sections of 16 x 2 mm steel tube on spigots and R-clips with a 22 mm tip;
+    probes are three 1 m sections of 16 x 2 mm steel tube on spigots and R-clips with an 18 mm tip
+    (22 mm until HPL-DDR-003, Amish, 2026-10-03);
     crawl boards are 15 mm plywood decks on two 45 x 70 mm battens, joined end to end by pinned link
     plates; the site box is 18 mm exterior plywood on skids with an overlapping lid.
 Main dimensions and interfaces only; tolerances are TRL 4 work. The same PARAMS feed
@@ -63,7 +64,7 @@ PARAMS = {
     # ---- rope (BOM 20)
     "rope_d": 14.0, "rope_mbs": 40000.0, "rope_len": 30.0,
     # ---- probe (BOM 6): tube OD, wall, section length, number of sections; tip; spigot; handle
-    "probe_tube": (16.0, 2.0, 1000.0, 3), "probe_tip": (22.0, 35.0, 20.0, 30.0),  # dia, cone, parallel, spigot
+    "probe_tube": (16.0, 2.0, 1000.0, 3), "probe_tip": (18.0, 35.0, 20.0, 30.0),  # dia, cone, parallel, spigot (18 mm: HPL-DDR-003)
     "probe_spigot": (11.5, 120.0), "probe_pin": 5.0, "probe_handle": (26.9, 2.6, 450.0),
     # ---- crawl board (BOM 4): deck length, width, ply thickness; battens; link holes; slot
     "board": (1500.0, 450.0, 15.0), "batten": (45.0, 70.0, 30.0),   # width, depth, inset from edge

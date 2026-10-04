@@ -3,7 +3,7 @@ doc_id: HPL-BLD-001
 title: HeapLine prototype build plan
 project: HeapLine
 doc_type: Build plan
-version: "0.1"
+version: "0.2"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -13,6 +13,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: First build plan; design made constructable (HPL-DDR-002)
+- version: "0.2"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: Round 2 requirement decisions (HPL-DDR-003); 18 mm probe tip, site box from a reused crate with the plywood box as the fallback, PPE from the cooperative's stock, carry and haul rules in the checks
 ---
 
 # HeapLine prototype build plan
@@ -27,7 +31,7 @@ revisions:
 
 *Figure 1. Every component in build order: made parts first, then bought parts.*
 
-One complete site kit: a plywood site box on skids, four crawl boards with eight link plates, six three-section probes, a hand capstan (base frame with a fixed post, drum, drive ratchet, lever head, pawls, bars, bushes, hold-down roller, keeper and stakes), a sheet clamp and a sheet stretcher, plus bought shovels, rope, slings and shackles, lookout kit, lamps and protective equipment. Sixteen components are made: the steel parts by cutting, drilling and welding (MIG or stick), the pawls and ratchets by laser or plasma profile cutting, the bushes by turning acetal, the boards and box by cutting, gluing and screwing exterior plywood, and the stretcher by cutting HDPE sheet and riveting webbing. The parts cost about USD 1,599 from the bill of materials.
+One complete site kit: a site box refitted from a reused crate (or the plywood box on skids where no sound crate is found), four crawl boards with eight link plates, six three-section probes, a hand capstan (base frame with a fixed post, drum, drive ratchet, lever head, pawls, bars, bushes, hold-down roller, keeper and stakes), a sheet clamp and a sheet stretcher, plus bought shovels, rope, slings and shackles, lookout kit, lamps and protective equipment. Sixteen components are made: the steel parts by cutting, drilling and welding (MIG or stick), the pawls and ratchets by laser or plasma profile cutting, the bushes by turning acetal, the boards (and the box, where it is made) by cutting, gluing and screwing exterior plywood, and the stretcher by cutting HDPE sheet and riveting webbing. This prototype kit carries its own capstan set, which in service is shared by neighbouring sites (HPL-DDR-003); with new protective equipment and a reused crate its parts cost about USD 1,447 from the bill of materials, or USD 1,599 with the plywood box.
 
 ## 2. What changed to make it buildable
 
@@ -42,7 +46,7 @@ One complete site kit: a plywood site box on skids, four crawl boards with eight
 | Shear pin | Not placed | 6 mm pin joining the drive ratchet to the drum's top flange (Figure 12) | The only path for the drive; it limits the rope tension |
 | Pawls | Not drawn | Noses just past a tooth face, pivots along the tangent (Figure 11) | They clear the teeth they ride over |
 | Keeper | None | Collar and cross pin on the post top | Nothing slides off when carried |
-| Probes | Sectional, joint not defined | Spigot joints with R-clips; tube ends bear; blunt 22 mm tip (Figures 6 and 7) | The push goes through the tube; the tip cannot cut |
+| Probes | Sectional, joint not defined | Spigot joints with R-clips; tube ends bear; blunt 18 mm tip (Figures 6 and 7; 18 mm since HPL-DDR-003) | The push goes through the tube; the tip cannot cut |
 | Crawl boards | Loose boards | Boards on two battens joined by pinned link plates (Figure 3) | Boards stay in line on the debris |
 | Site box | A box for the kit | A 1700 x 1020 x 1060 mm box sized so everything packs, capstan upright (Step 11) | The concept box could not hold the capstan or the boards |
 | Sheet clamp | None | A bolted two-bar clamp with a shackle lug (Figure 24) | Something to grip plastic sheeting |
@@ -100,12 +104,12 @@ Sizes are in millimetres. Weld with MIG, or with 2.5 mm stick electrodes on the 
 
 *Figure 5. Probe sections making sketch (HPL-DWG-103), sections drawn side by side.*
 
-**What it is and what it is made from.** A 3.07 m probe in three sections that join on spigots. 16 x 2.0 steel tube; 11.5 mm and 22 mm bright bar; 26.9 x 2.6 tube for the handle; R-clips on lanyards.
+**What it is and what it is made from.** A 3.07 m probe in three sections that join on spigots. 16 x 2.0 steel tube; 11.5 mm and 18 mm bright bar; 26.9 x 2.6 tube for the handle; R-clips on lanyards.
 
 **How to make it.**
 
 1. Cut three tubes 1000 long, ends square and deburred.
-2. Turn the tip from 22 mm bar: a 35 long cone ending in a 3 mm rounded point, 20 parallel, and a 12 mm spigot 30 long. Push the spigot into one tube and plug weld it. This is the tip section.
+2. Turn the tip from 18 mm bar: a 35 long cone ending in a 3 mm rounded point, 20 parallel, and a 12 mm spigot 30 long. Push the spigot into one tube and plug weld it. This is the tip section.
 3. Cut two spigots of 11.5 mm bar 120 long. Push one 60 into the top of the tip section and one into the top of the middle section; plug weld.
 4. Weld the 450 handle tube square across the top of the third tube.
 5. Fit each upper section over its spigot, ends tight, and drill a 5 mm hole through tube and spigot together, 30 above the joint.
@@ -119,7 +123,7 @@ Sizes are in millimetres. Weld with MIG, or with 2.5 mm stick electrodes on the 
 
 ![Figure 7. Joint 3: tip in the bottom section](05-build-plan/joint-03.png)
 
-*Figure 7. Joint 3, cut open. The tip is 3 mm wider than the tube each side, so the tube behind it rubs less.*
+*Figure 7. Joint 3, cut open. The tip is 1 mm wider than the tube each side, so the tube behind it rubs less, and its smaller face needs less push to start in stiff debris.*
 
 **Check before moving on.** Each probe is 3068 long assembled and straight within 10 mm; the sections of any probe fit any other.
 
@@ -322,11 +326,18 @@ Sizes are in millimetres. Weld with MIG, or with 2.5 mm stick electrodes on the 
 
 ![Figure 26. Making sketch of the site box body](../cad/drawings/HPL-DWG-115.png)
 
-*Figure 26. Site box body making sketch (HPL-DWG-115).*
+*Figure 26. Site box body making sketch (HPL-DWG-115), for the plywood box made where no sound crate is found.*
 
-**What it is and what it is made from.** The box the kit lives in at the shed. 18 mm exterior plywood; 45 x 45 and 70 x 45 treated timber; exterior glue, screws and paint.
+**What it is and what it is made from.** The box the kit lives in at the shed. First choice: a reused timber shipping crate, or a bought steel job box, with an inside of at least 1664 x 984 x 1042, sound, dry and free of rot or sharp fixings. Where none is found, make the box from 18 mm exterior plywood; 45 x 45 and 70 x 45 treated timber; exterior glue, screws and paint.
 
-**How to make it.**
+**How to refit a reused crate.**
+
+1. Check the inside sizes; the packing of Step 11 needs every millimetre of the 1664 x 984 x 1042.
+2. Screw two 70 x 45 skids under the base, 120 in from the long edges, so the base stands off wet ground.
+3. Add 45 x 45 corner battens inside any corner that has none; fix a handle cleat and rope handle to each end.
+4. Fix the EPDM seal strip round the top rim; prime and paint every outside face.
+
+**How to make it, where no crate is found.**
 
 1. Cut the base 1700 x 1020 and screw two skids under it, 120 in from the long edges.
 2. Cut two sides 1700 long and two ends to fit between them, all 1042 high; glue and screw them to the base and to 45 x 45 corner battens inside each corner.
@@ -341,9 +352,9 @@ Sizes are in millimetres. Weld with MIG, or with 2.5 mm stick electrodes on the 
 
 *Figure 27. Site box lid making sketch (HPL-DWG-116).*
 
-**What it is and what it is made from.** 18 mm exterior plywood: a top 1740 x 1060 and a skirt 48 deep all round, 2 clear of the body.
+**What it is and what it is made from.** The crate's own lid, or for the plywood box 18 mm exterior plywood: a top 1740 x 1060. Either way a skirt 48 deep all round, 2 clear of the body.
 
-**How to make it.** Glue and screw the skirt under the top's edges; paint; fit three strap hinges on the back, the hasp on the front and a folding steel stay; apply the drill card inside and the stop rule outside.
+**How to make it.** For a crate lid, screw treated timber battens round its edge as the skirt. For the plywood lid, glue and screw the skirt under the top's edges. Then paint; fit three strap hinges on the back, the hasp on the front and a folding steel stay; apply the drill card inside and the stop rule outside.
 
 **How it fits the parts next to it.**
 
@@ -364,7 +375,7 @@ Buy to specification, not brand. Line numbers are those of the bill of materials
 - **Club hammer (line 19).** 1.8 kg.
 - **Rope (line 20).** 30 m of 14 mm polyester double braid, minimum breaking strength at least 40 kN, with one eye splice and thimble at the load end.
 - **Slings and shackles (line 21).** Two polyester round slings WLL 2,000 kg (3 m and 2 m), three bow shackles WLL 2,000 kg with 19 mm pins, a tree protector strap.
-- **Lookout kit, lighting, PPE, cards, bags, fasteners and paint (lines 24 to 30).** As listed in the bill of materials; the lamps take AA alkaline cells, and no lithium cells go in the box.
+- **Lookout kit, lighting, PPE, cards, bags, fasteners and paint (lines 24 to 30).** As listed in the bill of materials; the lamps take AA alkaline cells, and no lithium cells go in the box. The protective equipment is issued from the cooperative's own stock to the specification of line 26 and stays in the box. The drill card carries the carry rule (four people with the search kit first, then three with the capstan set) and the haul rule (four haulers whenever the stretcher crosses debris, two only along the boards).
 
 ## 4. Putting it together
 
@@ -469,16 +480,16 @@ These are listed here and recorded in a TRL 4 test report, not in this plan.
 | Check | Requirement | How | Pass when |
 | --- | --- | --- | --- |
 | Deployment drill | R1 | Timed from a whistle 100 m from the shed | First probe in within 5 min |
-| Probe reach | R2 | Probes pushed by one and by two people on a test heap of mixed waste, loose and compacted | Depth reached recorded against the 2.5 m target |
+| Probe reach | R2 | 18 mm tip probes pushed by one and by two people on a test heap of mixed waste, loose and compacted | Two people reach 2.5 m in the compacted heap |
 | Board sinkage | R3 | 100 kg on a board on loose fill; then across a 0.8 m gap | Sinkage under 50 mm; no cracking |
 | Capstan pull | R4 | Pull through a load cell with four people | 5 kN reached |
 | Shear pin release | R10 | Pull against a fixed stop through a load cell, slowly | Pin shears between 5.1 and 7.6 kN; a pawl holds the drum |
 | Holding | R11 | At working pull, let go of the bars | Drum stops within one tooth |
 | Proof load of capstan and sling | R10 | CalRig or a load cell, held 1 min at 8 kN, nobody in the rope line | No movement over 2 mm, no damage |
-| Stretcher haul | R5 | 100 kg manikin over 30 m of debris, two and four haulers | Record force and time |
+| Stretcher haul | R5 | 100 kg manikin over 30 m: four haulers on debris, two along the boards | Each hauler 200 N or less; record force and time |
 | Stop rule | R6 | Ask every drill participant after the drill | All six signals named |
 | Storage | R7 | Inspect after 12 months in the box | Everything usable |
-| Weighing | R8 | Weigh every carried item | Each 25 kg or less; record the carry split |
+| Weighing | R8 | Weigh every carried item and each person's load in the two waves | Each item and each carrier's load 25 kg or less |
 
 ## 6. Safety stops
 
@@ -491,7 +502,7 @@ Work stops at each of these points until what is listed is true.
 5. **Whenever hauling stops.** The tail is made fast on the cleat and the pawls are holding before anyone lets go.
 6. **After a shear pin breaks.** Stop. Slack the rope by lifting the pawls one tooth at a time with the bars held. Find out why it broke; fit a new pin of the same 6 mm S275 bar from the tag chain.
 7. **On any stop signal.** Everyone leaves the debris along the boards to the safe zone at once, whatever they are doing.
-8. **At the end of each drill and at each monthly inspection.** Inspect the rope, splice, slings, shackles, pawls, pins, boards and probes; replace anything cut, cracked, bent or worn; check the lamp cells and the padlock.
+8. **At the end of each drill and at each monthly inspection.** Inspect the rope, splice, slings, shackles, pawls, pins, boards and probes; replace anything cut, cracked, bent or worn; check the lamp cells, the padlock and that the protective equipment issued from stock is still in the box.
 
 ## 7. Tools, skills and workspace
 

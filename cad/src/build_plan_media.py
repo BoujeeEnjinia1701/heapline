@@ -25,6 +25,9 @@ from model import (PARAMS as P, derived, capstan_parts, probe_parts, board, link
 OUT = ROOT / "docs" / "05-build-plan"
 DWG = ROOT / "cad" / "drawings"
 DATE = "2026-10-03"
+# making sketches changed by the round 2 requirement decisions (HPL-DDR-003, Amish, 2026-10-03)
+REV_P2 = {"HPL-DWG-103": "HPL-DDR-003: 18 mm probe tip", "HPL-DWG-115": "HPL-DDR-003: made only where no reused crate is found",
+          "HPL-DWG-116": "HPL-DDR-003: made only where no reused crate is found"}
 D = derived(P)
 CAP = capstan_parts(P)
 PR = probe_parts(P)
@@ -116,10 +119,10 @@ def sheets():
           "Galvanise or paint",
           "Make 8 (two per joint, four spare). Check: drops into two butted boards"]),
         ("HPL-DWG-103", "Probe sections: making sketch", Compound(list(PR.values())), "probe_mid_section", [],
-         "16 x 2.0 steel tube; 11.5 and 22 mm bright bar; 26.9 x 2.6 tube", probe_side,
+         f"16 x 2.0 steel tube; 11.5 and {P['probe_tip'][0]:.0f} mm bright bar; 26.9 x 2.6 tube", probe_side,
          ["Three sections of 16 x 2.0 tube, each 1000 long, ends square",
           "Spigot 11.5 dia x 120 into the top of the tip and middle sections, 60 in; plug weld",
-          "Tip from 22 bar: cone 35 long to a 3 mm rounded point, 20 parallel, 30 x 12 spigot",
+          f"Tip from {P['probe_tip'][0]:.0f} bar: cone 35 long to a 3 mm rounded point, 20 parallel, 30 x 12 spigot",
           "T handle 26.9 x 2.6 x 450 welded square across the top section",
           "5 mm cross hole 30 above each joint, through tube and spigot together",
           "Paint a band every 250 from the tip; R-clip on a lanyard at each joint",
@@ -209,7 +212,8 @@ def sheets():
           "Check: rolls to 250 dia; a 100 kg dummy rides on it"]),
         ("HPL-DWG-115", "Site box body: making sketch", BX["box_body"], "box_body", [Part("lid", BX["box_lid"], "#D1D5DB")],
          "18 mm exterior plywood; 45 x 45 and 70 x 45 mm treated timber", None,
-         ["Outside 1700 x 1020; sides 1060 high above the skids",
+         ["Made only where no sound reused crate is found (HPL-DDR-003)",
+          "Outside 1700 x 1020; sides 1060 high above the skids",
           "Base on two skids 70 x 45, 120 in from the long edges",
           "Corner battens 45 x 45 inside each corner; glue and screw",
           "Hardwood handle cleats on each end; rope handles through them",
@@ -217,7 +221,8 @@ def sheets():
           "Check: diagonals within 3 mm; lid sits evenly on the seal"]),
         ("HPL-DWG-116", "Site box lid: making sketch", BX["box_lid"], "box_lid", [Part("body", BX["box_body"], "#D1D5DB")],
          "18 mm exterior plywood", None,
-         ["Top 1740 x 1060 x 18; skirt 48 deep all round",
+         ["Made only where no sound reused crate is found (HPL-DDR-003)",
+          "Top 1740 x 1060 x 18; skirt 48 deep all round",
           "Skirt 2 mm clear of the body on every side",
           "Three strap hinges on the back, hasp on the front, folding stay",
           "Drill card inside, stop rule outside",
@@ -227,6 +232,8 @@ def sheets():
         nbs = nb if nb else []
         kw = {"view_shape": vshape} if vshape is not None else {}
         nb_use = [n for n in (nbs if nbs else probe_all if key.startswith("probe") else []) if n.name != key][:12]
+        if dwg in REV_P2:
+            kw.update(rev="P2", revisions=[("P1", "Making sketch for the prototype build plan", DATE, "AC"), ("P2", REV_P2[dwg], DATE, "AC")])
         bv.component_sheet(Part(title, shape, COL[key]), nb_use, "HeapLine", dwg, title, mat, notes, DATE,
                            out_dir=str(DWG), **kw)
         print("sheet", dwg)
@@ -248,9 +255,9 @@ def joints(only=None):
               part("R-clip pin, 5 mm", crop(PR["probe_pins"], *r2), "probe_pins")],
              OUT / "joint-02.png", "Joint 2: probe sections on their spigot", "Cut open: tube ends bear on each other; the pin only stops them pulling apart", cut="-X", elev=12)
     r3 = (-30, 30, -30, 30, -5, 130)
-    bv.joint([part("Tip, 22 mm", crop(PR["probe_tip_section"], -30, 30, -30, 30, -5, 56), "probe_tip_section"),
+    bv.joint([part(f"Tip, {P['probe_tip'][0]:.0f} mm", crop(PR["probe_tip_section"], -30, 30, -30, 30, -5, 56), "probe_tip_section"),
               part("Bottom of the tip section tube", crop(PR["probe_tip_section"], -30, 30, -30, 30, 56, 130), "probe_mid_section")],
-             OUT / "joint-03.png", "Joint 3: tip in the bottom section", "Cut open: 12 mm spigot 30 deep, plug welded; tip 3 mm wider than the tube each side", cut="-X", elev=12)
+             OUT / "joint-03.png", "Joint 3: tip in the bottom section", f"Cut open: 12 mm spigot 30 deep, plug welded; tip {(P['probe_tip'][0] - P['probe_tube'][0]) / 2:.0f} mm wider than the tube each side", cut="-X", elev=12)
     r4 = (-80, 80, -120, 120, -5, 120)
     bv.joint([part("Centre member 100 x 40 x 4", crop(CAP["frame"], -50, 50, -120, 120, -5, 41), "frame"),
               part("Post 60.3 x 5.0", crop(CAP["frame"], -31, 31, -31, 31, 41, 120) + crop(CAP["frame"], -31, 31, -31, 31, -1, 40), "drum")],

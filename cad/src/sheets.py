@@ -88,18 +88,19 @@ def box_sheet():
     views = safe_project_views(Compound([bxp["box_body"], bxp["box_hardware"]] + list(pk.values())), work, line_weight=0.25)
     work2 = ROOT / "cad" / "drawings" / "_views2b"
     iso = safe_project_views(Compound(list(bxp.values())), work2, line_weight=0.25)["iso"]
-    s = Sheet(project="HeapLine", title="Site box: packed arrangement", dwg_no="HPL-DWG-002", rev="P2",
+    s = Sheet(project="HeapLine", title="Site box: packed arrangement", dwg_no="HPL-DWG-002", rev="P3",
               author="Amish Chadha", date=DATE, scale=1 / 20, theme="technical",
-              material="18 mm exterior plywood box; contents per bom/bom.csv. PRELIMINARY, NOT FOR FABRICATION",
-              revisions=REVS)
+              material="Reused crate refitted, or 18 mm exterior plywood box where none is found; contents per bom/bom.csv. PRELIMINARY, NOT FOR FABRICATION",
+              revisions=REVS + [("P3", "HPL-DDR-003: reused crate box; 18 mm probe tips", DATE, "AC")])
     s.add_ortho(views)
     s.add_svg(iso, 276, 32, 140, 92, label="Isometric view, lid closed", sublabel="Not to scale; seen from the front right")
     s.add_notes("Packing and box (mm)", [
-        "Box outside 1700 x 1020 x 1060 on skids; lid 1740 x 1060 (1, 2)",
-        "Inside 1664 x 984 x 1042; corner battens 45 x 45",
+        "Reused crate, inside at least 1664 x 984 x 1042 (1, 2)",
+        "Or plywood box 1700 x 1020 x 1060 on skids; lid 1740 x 1060",
+        "Plywood box inside 1664 x 984 x 1042; corner battens 45 x 45",
         "Back: four crawl boards flat, 340 high (4)",
         "On the boards: four shovels, probe bag, bars, rolled stretcher",
-        "Front right: capstan upright, bars off, stakes out (9 to 17)",
+        "Front right: shared capstan, where kept; bars off (9 to 17)",
         "Front left: rope, slings and clamp, stakes, lookout and PPE bags",
         "Lid: drill card inside, stop rule outside (27)",
         "Combination padlock on the front hasp (3)",

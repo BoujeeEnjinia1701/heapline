@@ -1,5 +1,86 @@
 # Review note: HeapLine
 
+## Session 2026-10-03: round 2 requirement decisions applied
+
+Amish, 2026-10-03: "i approve all of the 47 recommendations provided by you. Execute them." The four HeapLine decisions posed in the TRL 3 session below (items 1 to 4) are therefore decided exactly as recommended and recorded in `docs/decisions/0003-requirement-decisions-round2.md` (HPL-DDR-003). They were carried into the design at TRL 3 scope only; nothing was built, tested or bought.
+
+### What changed
+
+| # | Decision | What changed in the repo |
+| --- | --- | --- |
+| 1 | R2: 18 mm tip on all six probes (A) | `cad/src/model.py` probe tip 22 to 18 mm; STEP and STL re-exported (checks: no overlaps, no floating parts); `HPL-DWG-103` Rev P2; joint 3 and the probe pictures regenerated; BOM line 6; build plan section 3.3 |
+| 2 | R5: drill card rule, four haulers on debris, two only along the boards (A) | BOM line 27 and the drill card wording; concept step 6; build plan first checks; R5 status |
+| 3 | R8: two waves, four with the search kit, then three with the capstan set (A) | `sizing.py` [F2a]; concept summary and step 5; build plan weighing check; R8 status |
+| 4 | R9: shared capstan set, reused crate box and PPE from the cooperative's stock (C) | BOM `cost_basis` column (site, shared, stock); lines 1 and 2 as a reused crate refit with the plywood box as the fallback; line 26 from stock; capstan lines 9 to 22 shared; `sizing.py` G; `HPL-DWG-002` Rev P3 and `HPL-DWG-115`, `116` Rev P2; build plan sections 1, 3.15, 3.16, 3.17; README and concept |
+
+Also updated: `docs/04-calcs/01-sizing.md` (HPL-CAL-001 v0.2) and `results.csv`, `docs/03-requirements.md` (v0.4), `docs/02-concept.md` (v0.4), `docs/05-build-plan.md` (v0.2), `docs/06-design-decisions.md` (v0.2), `README.md`, `cad/src/concept_media.py` key figures, and `project.yaml` (trl_evidence). Concept media (`hero.png`, `exploded.png`, `flow.png`, `concept-blueprint`), `media/model.glb` (linear deflection 1.0, angular 0.35) and all build plan pictures and making sketches were regenerated from the model. No requirement target was restated.
+
+### Requirement status
+
+| ID | Before | After |
+| --- | --- | --- |
+| R2 | At risk: stiffer debris 0 m for one, 1.8 m for two | Met on paper: two people reach 2.6 m in stiffer debris, one 0.6 m; confirm on a test heap at TRL 4 |
+| R5 | Met with four haulers; at risk with two on debris | Met on paper under the drill card rule: 127 N each for four on debris, 153 N each for two along the boards |
+| R7 | Met on paper by material choice | Unchanged, provided the reused crate is sound and painted |
+| R8 | At risk: 37.8 kg each for four in one trip | Met on paper for each wave: 21.5 kg each for four, then 21.7 kg each for three |
+| R9 | Not met: USD 1,599 per site kit | Not met: USD 830 a site plus a share of the USD 449 capstan set |
+
+R1, R3, R4, R10 and R11 are unchanged and met on paper; R6 is still not verifiable at TRL 3.
+
+### Cost
+
+Value-engineering target: USD 1,800 (unchanged in `project.yaml`). Estimated cost of the constructable design: USD 830.00 a site (was USD 1,599.00), plus a share of the USD 449.00 capstan set: USD 1,279.00 a site unshared, USD 1,054.50 shared by two sites, USD 979.67 by three, USD 942.25 by four. The prototype kit as listed, with its own capstan set and new PPE, is USD 1,447.00 (USD 1,599.00 with the plywood box). The reused crate refit (USD 40 body, USD 13 lid) is an estimated allowance derived from the timber and paint share of the old box lines. R9 (USD 400 a site) remains not met, as Amish's option stated.
+
+### New questions, proposed, awaiting Amish
+
+**5. Capstan sharing group.**
+State: the shared capstan set is kept at one shed; at the other sites the second wave must fetch it, so its arrival and each site's share depend on how many sites share it and how far apart they are. Paper estimate for a group fetching it from a shed at distance d (run at 2.5 m/s, 30 s to open, carry back at 0.8 m/s): about 3 min at 100 m, 9 min at 300 m and 14 min at 500 m after the second group sets off.
+
+| Option | Capstan arrival (estimate) | Cost a site with the share |
+| --- | --- | --- |
+| A: up to three sites within 300 m of the keeping shed | About 9 min after the second group sets off | About USD 980 |
+| B: two sites within 300 m | About 9 min | About USD 1,055 |
+| C: up to four sites within 500 m | About 14 min | About USD 942 |
+
+**Recommendation: A**: it keeps the capstan within about 9 minutes, well after the first probe line it is not needed for, and saves most of the shareable cost.
+
+**6. R8 target wording.**
+State: R8 says "whole kit carried by four people"; under the two-wave decision seven people carry it, four then three, each under 25 kg. The status is reported as met for each wave, as the option stated, but the target text no longer matches the way the kit is carried.
+
+| Option | Effect |
+| --- | --- |
+| A: restate R8 as "no item over 25 kg and no carrier over 25 kg; the search kit carried by four people in the first wave" | R8 met on paper as written; no design change |
+| B: keep the wording and report R8 as met for each wave | No change; the mismatch stays in the requirements |
+
+**Recommendation: A**: the requirement should say what the drill card asks people to do.
+
+**7. Site box where no sound reused crate is found.**
+State: the USD 830 assumes a reused crate refitted for USD 53; Amish's option allowed a reused crate or a bought steel job box. A job box of this inside size (1664 x 984 x 1042 mm) has not been priced.
+
+| Option | Effect on R9 | Cost |
+| --- | --- | --- |
+| A: make the plywood box of HPL-DWG-115 and 116 | About USD 982 a site before the capstan share | USD 152 more a site |
+| B: buy a steel job box of the same inside size | Not estimated; a quote is needed | Unknown, probably more than A |
+
+**Recommendation: A**: it is already drawn and priced and keeps every site the same.
+
+### Safety notes
+
+- The 18 mm tip keeps the 3 mm rounded point and the 35 mm cone, so its half-angle falls from about 13 degrees to about 10 degrees. It is still blunt and pushed by hand only; the no-hammer rule stands.
+- Two people pushing one probe can exceed its 506 N buckling load with 3 m free; the drill card should say to push steadily and stop if the probe bows.
+- Until the shared capstan arrives, heavy sheeting and timber over a mark are left in place; nobody hauls them by hand from the debris.
+- The shared capstan set is inspected at the shed that keeps it, with its spare 6 mm S275 shear pins on their tag chain; it must travel with them.
+- PPE from the cooperative's stock is a safety item: a full set stays in every box and is checked at each monthly inspection.
+- No change touches the capstan's shear pin, pawls or anchoring.
+
+### Re-render
+
+The hero geometry changed only at the probe tips (4 mm smaller in diameter), which cannot be seen at hero scale. The photoreal renders on Amish's Mac (`media/render-hero.png` and the other views) do not need a re-render for this change; the card text should be checked if it quotes the cost.
+
+### Recommended next step
+
+Amish's choices on questions 5 to 7; then, when the phase allows TRL 4, the test heap trials of the 18 mm tip with one and two people, and drills that time both carrying waves and the stretcher haul under the drill card rule.
+
 ## Session 2026-10-03: TRL 3 (kit 1.7.0, /to-trl3 under Amish's pre-approvals, batch 2)
 
 Amish, 2026-10-03: "start with the first 14 repos from the list of 29 projects. I pre-approve the batch runs along with any recommendations you come up with. I also accept any cost overruns or variations from the assumed scope cost." For this batch: "Proceed with the remaining 15 scaffolds", under the same pre-approval. Every design choice and recommendation in this session is therefore recorded as decided, dated 2026-10-03, in `docs/06-design-decisions.md`. Requirements that are not met or at risk are not decided: each is posed below as a decision for Amish (Amish, 2026-10-03: "A simple statement doesn't add value - ensure you are identifying a state and posing it as a clear recommendation for me to decide on."). Kit 1.7.0 was installed from the kit source; `.kit/PHASE.yaml` kept as installed.

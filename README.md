@@ -4,7 +4,7 @@
 
 ![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827) [![REUSE compliant](https://github.com/BoujeeEnjinia1701/heapline/actions/workflows/reuse.yml/badge.svg)](https://github.com/BoujeeEnjinia1701/heapline/actions/workflows/reuse.yml)
 
-**Area:** Situational field hardware · **TRL:** 3 of 9 (proof of concept on paper; constructable design) · **Value-engineering target:** USD 1,800; estimated parts cost USD 1,599 · **Difficulty:** 3 of 5
+**Area:** Situational field hardware · **TRL:** 3 of 9 (proof of concept on paper; constructable design) · **Value-engineering target:** USD 1,800; estimated parts cost USD 830 a site plus a share of a USD 449 capstan set · **Difficulty:** 3 of 5
 
 Keeps a slide-rescue kit at the pickers' shed so they can search, probe and dig safely in the first minutes.
 
@@ -58,22 +58,22 @@ A slide-rescue kit kept at the waste pickers' shed (probes, crawl boards, shovel
 
 Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [docs/03-requirements.md](docs/03-requirements.md) · Calculations: [docs/04-calcs/01-sizing.md](docs/04-calcs/01-sizing.md) · Prototype build plan: [docs/05-build-plan.md](docs/05-build-plan.md) · Design decisions: [docs/06-design-decisions.md](docs/06-design-decisions.md) · 3D viewer: [media/viewer.html](media/viewer.html)
 
-On paper (HPL-CAL-001): the first probe line starts about 4.6 minutes after the alarm; the hand capstan pulls 5 kN with four people at 114 N each, and a shear pin caps the rope at about 6.4 kN; probes reach 2.6 m in loosened debris; crawl boards sink 44 mm under a kneeling searcher. Probe depth in stiffer debris (R2), carrying the whole kit in one trip (R8) and the stretcher with only two haulers (R5) are at risk, and the per-kit cost (R9) is not met; each is posed as a decision in [docs/REVIEW.md](docs/REVIEW.md).
+On paper (HPL-CAL-001): the first probe line starts about 4.6 minutes after the alarm; the hand capstan pulls 5 kN with four people at 114 N each, and a shear pin caps the rope at about 6.4 kN; probes with an 18 mm tip reach 2.6 m in loosened debris with one person and in stiffer debris with two; crawl boards sink 44 mm under a kneeling searcher. The kit is carried in two waves, the search kit by four people and the capstan set by three, and the drill card keeps four haulers on the stretcher whenever it crosses debris. One capstan set is shared by neighbouring sites; with a reused crate as the site box and protective equipment from the cooperative's stock, the parts bought for each site cost about USD 830, still above the per-site cost target (R9). Amish's decisions are recorded in [docs/decisions/0003-requirement-decisions-round2.md](docs/decisions/0003-requirement-decisions-round2.md); open questions are in [docs/06-design-decisions.md](docs/06-design-decisions.md).
 
 ## Key components
 
-- Site box: 18 mm exterior plywood on skids, combination padlock, drill card and stop rule on the lid
-- Probes: six, each three 1 m steel sections on spigots with a blunt 22 mm tip
+- Site box: a reused crate refitted on skids (18 mm exterior plywood where no crate is found), combination padlock, drill card and stop rule on the lid
+- Probes: six, each three 1 m steel sections on spigots with a blunt 18 mm tip
 - Crawl boards: four plywood boards on battens, linked end to end
 - Shovels: four, long handled
-- Hand capstan: pumped friction capstan with a drive ratchet, two holding pawls and a shear pin; 14 mm rope, sling to a sound anchor, sheet clamp
+- Hand capstan (one set shared by neighbouring sites): pumped friction capstan with a drive ratchet, two holding pawls and a shear pin; 14 mm rope, sling to a sound anchor, sheet clamp
 - Sheet stretcher: roll-up 2 mm HDPE sheet with straps
 - Lookout kit: whistles, vests, marker wands, safe-zone sign
-- Lighting and PPE: AA head lamps (no lithium cells), gloves, boots, masks, glasses
+- Lighting and PPE: AA head lamps (no lithium cells); gloves, boots, masks and glasses from the cooperative's stock, kept in the box
 
 ## Building the prototype
 
-The build plan takes a capable maker from plywood, steel tube, plate and HDPE sheet to one complete site kit, with a making sketch for each of the sixteen made components, close-ups of the eleven joints that need one and fifteen illustrated steps. The boards and box are glued and screwed; the capstan, probes and clamp are cut, welded and profile cut; the rope, lifting gear, shovels and protective equipment are bought. It is a plan, not yet built; building and testing to it is TRL 4 work. See [docs/05-build-plan.md](docs/05-build-plan.md).
+The build plan takes a capable maker from plywood, steel tube, plate and HDPE sheet to one complete site kit, with a making sketch for each of the sixteen made components, close-ups of the eleven joints that need one and fifteen illustrated steps. The boards (and the box, where no reused crate is found) are glued and screwed; the capstan, probes and clamp are cut, welded and profile cut; the rope, lifting gear, shovels and protective equipment are bought. It is a plan, not yet built; building and testing to it is TRL 4 work. See [docs/05-build-plan.md](docs/05-build-plan.md).
 
 ![Every component of the prototype, pulled apart and numbered in build order](docs/05-build-plan/overview.png)
 
