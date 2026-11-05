@@ -3,9 +3,9 @@ doc_id: HPL-BLD-001
 title: HeapLine prototype build plan
 project: HeapLine
 doc_type: Build plan
-version: "0.3"
+version: "0.4"
 status: Draft
-date: '2026-10-04'
+date: '2026-11-03'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -21,6 +21,10 @@ revisions:
   date: '2026-10-04'
   author: Amish Chadha
   change: "Siting limit for the shared capstan set (decision 3A, HPL-DDR-004): about 500 m walk from the host shed, checked in the timed drills; wording only"
+- version: "0.4"
+  date: '2026-11-03'
+  author: Amish Chadha
+  change: "Kit 1.9.1 upgrade: pictures redrawn from the D3 model; STEM fixes of HPL-DDR-006 carried in (pin bar certificate, probe push rule, digging guidance on the drill card)"
 ---
 
 # HeapLine prototype build plan
@@ -374,7 +378,7 @@ Buy to specification, not brand. Line numbers are those of the bill of materials
 - **Rope (line 20).** 30 m of 14 mm polyester double braid, minimum breaking strength at least 40 kN, with one eye splice and thimble at the load end.
 - **Slings and shackles (line 21).** Two polyester round slings WLL 2,000 kg (3 m and 2 m), three bow shackles WLL 2,000 kg with 19 mm pins, a tree protector strap.
 - **Lookout kit, lighting, PPE, cards, bags, fasteners and paint (lines 24 to 30).** As listed in the bill of materials; the lamps take AA alkaline cells, and no lithium cells go in the crates. The PPE comes from the cooperative's own stock and is kept in its bag in the search crate.
-- **Drill card (line 27).** Besides the stop rule, it carries two rules: the kit goes out in two waves (four people with the search kit first, then three with the capstan set from the host site), and the stretcher is hauled by four people whenever it crosses debris, by two only along the boards.
+- **Drill card (line 27).** Besides the stop rule, it carries two rules: the kit goes out in two waves (four people with the search kit first, then three with the capstan set from the host site), and the stretcher is hauled by four people whenever it crosses debris, by two only along the boards. The card also carries the probe and digging rules of HPL-DDR-006: one person pushes a probe while more than 1.5 m of tube is above the debris, two only below that; no one goes head first into a hole, a watcher stands at every hole, and everyone backs out on headache, dizziness or any smell.
 
 ## 4. Putting it together
 
@@ -450,13 +454,13 @@ Search crate, at every site: the four boards flat at the back, then the shovels 
 
 ![Step 12](05-build-plan/step-12.png)
 
-The kit goes out in two waves. Four people carry the search kit first, about 21.5 kg each; a second group of three brings the capstan set from the host site, about 21.7 kg each, and it is not needed until the probe line is working. On the practice heap, post the lookout first on firm ground to the side, with the whistle and the safe-zone sign. Lay the boards out from firm ground and link them.
+The kit goes out in two waves. Four people carry the search kit first, about 21.5 kg each; a second group of three brings the capstan set from the host site, about 21.4 kg each, and it is not needed until the probe line is working. On the practice heap, post the lookout first on firm ground to the side, with the whistle and the safe-zone sign. Lay the boards out from firm ground and link them.
 
 ### Step 13: probe line from the boards
 
 ![Step 13](05-build-plan/step-13.png)
 
-Join the probes and push them straight down in a line about 0.5 m apart from the boards. Mark every strike with a flagged wand.
+Join the probes and push them straight down in a line about 0.5 m apart from the boards. Mark every strike with a flagged wand. One person pushes while more than 1.5 m of tube is above the debris; two push only below that (HPL-DDR-006).
 
 ### Step 14: set the capstan on firm ground
 

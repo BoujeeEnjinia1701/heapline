@@ -6,7 +6,7 @@ R4,Capstan pull,"Pin releases at 6374 N (5099 to 7648 N); 114 N each for four pe
 R5,Casualty transport,"Debris level 510 N: 127 N each for four, 255 N each for two; boards 153 N each for two","Met with the drill-card rule: four haulers on debris, two only along the boards"
 R6,Stop rule understood,Stop rule printed on the lid and pocket cards,Not verifiable at TRL 3
 R7,Storage life,"Exterior plywood, painted or galvanised steel, UV-stabilised HDPE, alkaline cells stored out",Met on paper by material choice; inspection at TRL 4
-R8,Portable,"Heaviest item 21.2 kg; carried kit 151 kg in two waves: search wave 21.5 kg each for four, capstan wave 21.7 kg each for three",Met in two waves
+R8,Portable,"Heaviest item 20.9 kg; carried kit 150 kg in two waves: search wave 21.5 kg each for four, capstan wave 21.4 kg each for three",Met in two waves
 R9,Cost,USD 827.00 per site search kit against USD 850; shared capstan set USD 547.00 per group of neighbouring sites,Met as restated
 R10,Overload limit,"Pin releases at 6374 N nominal, 7648 N at most; rope factor 4.5 at the design tension",Met on paper
 R11,Holds when let go,Two holding pawls; one takes 5.5 kN at 77 MPa tooth bearing,Met on paper

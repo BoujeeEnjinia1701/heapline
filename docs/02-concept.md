@@ -99,8 +99,8 @@ From HPL-CAL-001, on the constructable design:
 | Capstan force per person at 5 kN | 114 N | Four people, two on each bar |
 | Shear pin release | 6.4 kN (5.1 to 7.6 kN) | S275 pin, plus or minus 20 % |
 | Haul force on the stretcher, level debris | 510 N | Friction 0.5 |
-| Heaviest carried item | 21.2 kg | Capstan frame with post |
-| Carried kit | 151 kg in two waves | Search wave 21.5 kg each for four; capstan wave 21.7 kg each for three |
+| Heaviest carried item | 20.9 kg | Capstan frame with post |
+| Carried kit | 150 kg in two waves | Search wave 21.5 kg each for four; capstan wave 21.4 kg each for three |
 | Parts cost | USD 827 a site; shared capstan set USD 547 | R9 restated to USD 850 a site; value-engineering target USD 1,800 |
 
 ![Figure 3. Capstan energy flow](../media/flow.png)

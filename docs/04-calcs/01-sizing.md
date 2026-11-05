@@ -3,9 +3,9 @@ doc_id: HPL-CAL-001
 title: HeapLine sizing calculations
 project: HeapLine
 doc_type: Calculation
-version: "0.2"
+version: "0.3"
 status: Draft
-date: '2026-10-03'
+date: '2026-11-03'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -17,6 +17,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: "Amish's requirement decisions 20A, 21A, 22A and 23C (HPL-DDR-003): 18 mm probe tip; four haulers on debris; two carrying waves; shared capstan set, reused crates and PPE from the cooperative; R9 restated"
+- version: "0.3"
+  date: '2026-11-03'
+  author: Amish Chadha
+  change: "Kit 1.9.1 upgrade: masses re-read from the D3 model (welds, fasteners and clips now modelled): heaviest item 20.9 kg, carried kit 150 kg, capstan wave 21.4 kg each; no design or target changed; requirement IDs PR-001 to PR-015 added to the requirement map"
 ---
 
 # HeapLine sizing calculations
@@ -108,10 +112,10 @@ Four M12 wing bolts at 2.5 kN each, with two faces at a friction coefficient of 
 
 | Item | Mass |
 | --- | --- |
-| Capstan frame with post and roller | 21.2 kg |
-| Capstan drum, head and ratchet | 15.3 kg |
-| Capstan bars (2) | 5.4 kg |
-| Stakes and mallet | 10.0 kg |
+| Capstan frame with post and roller | 20.9 kg |
+| Capstan drum, head and ratchet | 15.7 kg |
+| Capstan bars (2) | 5.2 kg |
+| Stakes and mallet | 9.2 kg |
 | Rope (30 m) | 4.1 kg |
 | Slings, shackles and sheet clamp | 7.6 kg |
 | Crawl board (each of 4) | 9.7 kg |
@@ -121,9 +125,9 @@ Four M12 wing bolts at 2.5 kN each, with two faces at a friction coefficient of 
 | Sheet stretcher | 3.9 kg |
 | Lookout kit, lighting, PPE, bags and cards | 13.5 kg |
 
-- The heaviest carried item is the capstan frame with its post and roller, 21.2 kg. The search crate (about 53 kg body and 17 kg lid as modelled in 18 mm boards) stays at the shed; the capstan crate (about 53 kg and 11 kg) stays at the host site [F1]. A reused crate's own mass will differ.
-- The carried kit is 151 kg: 86 kg for the search wave and 65 kg for the capstan wave. Four people carrying everything at once would take 37.7 kg each [F2].
-- Two waves (decision 22A): four people carry the search wave first, 21.5 kg each; a second group of three brings the capstan set, 21.7 kg each, under the 25 kg limit. R8 is met in two waves [F2b].
+- The heaviest carried item is the capstan frame with its post and roller, 20.9 kg. The search crate (about 51 kg body and 17 kg lid as modelled in 18 mm boards) stays at the shed; the capstan crate (about 52 kg and 11 kg) stays at the host site [F1]. A reused crate's own mass will differ.
+- The carried kit is 150 kg: 86 kg for the search wave and 64 kg for the capstan wave. Four people carrying everything at once would take 37.5 kg each [F2].
+- Two waves (decision 22A): four people carry the search wave first, 21.5 kg each; a second group of three brings the capstan set, 21.4 kg each, under the 25 kg limit. R8 is met in two waves [F2b].
 - Deployment from the alarm to the first probe line: 40 s to run 100 m to the shed, 30 s to open, 125 s to carry back, 20 s to post the lookout and 60 s to lay the first boards while the probes are joined: 275 s, 4.6 min [F3]. The capstan is not needed for the first probe line, so R1 is unchanged.
 - The capstan set is kept at the host site (decision 23C). Allowing 60 s to open its crate and share out the load, the capstan wave arrives 3.8 min after the alarm from 100 m, 9.2 min from 300 m, 14.8 min from 500 m and 28.5 min from 1 km [F4]. Amish decided on 2026-10-04 (3A, HPL-DDR-004) that a shared capstan serves only sites within about 500 m walk of the host shed, where it arrives in about 14.8 min; the TRL 4 timed drills check this.
 
@@ -148,7 +152,13 @@ Decision 23C splits the kit into a search kit that every site keeps and one caps
 | R5 | 127 N each for four on level debris; 153 N each for two on the boards | Met with the drill-card rule: four haulers on debris, two only along the boards |
 | R6 | Stop rule printed on the lid and pocket cards | Not verifiable at TRL 3 |
 | R7 | Weather-resistant materials; no lithium cells | Met on paper by material choice |
-| R8 | Heaviest item 21.2 kg; search wave 21.5 kg each for four, capstan wave 21.7 kg each for three | Met in two waves |
+| R8 | Heaviest item 20.9 kg; search wave 21.5 kg each for four, capstan wave 21.4 kg each for three | Met in two waves |
 | R9 | USD 827 per site search kit against USD 850; shared capstan set USD 547 per group of sites | Met as restated |
 | R10 | Pin releases at 6.4 kN nominal, 7.6 kN at most; rope factor 4.5 at 8 kN | Met on paper |
 | R11 | Two holding pawls; one takes the design tension | Met on paper |
+
+## Requirement map (kit 1.9.1)
+
+The requirements R1 to R11 are now PR-001 to PR-011 in HPL-PRS-001 (same targets). Results by product requirement: PR-001 deploy fast [F3]; PR-002 probe depth [B1c, B1s]; PR-003 crawl board [C1 to C3]; PR-004 capstan pull [A2 to A4]; PR-005 casualty transport [D]; PR-007 storage life (materials, BOM); PR-008 portable [F1 to F2b]; PR-009 cost [G1 to G3]; PR-010 overload limit [A4, A5]; PR-011 holds when let go [A7]. PR-012 lighting: six head lamps and two hand lamps on AA cells, BOM line 25, 1.5 kg [F-lighting]. PR-013 repair with common stock: steel tube and bar, plywood, timber, HDPE, rope (BOM). PR-014 not certified equipment: safety wording in the problem statement, README, drill card and drawing title blocks. PR-015 shared capstan arrival: 14.8 min from 500 m, 3.8 min from 100 m [F4]. The numbers for options B and C are in `docs/04-calcs/options_calc.py` (HPL-OPT-001).
+
+Pin bar (kit 1.9.1, HPL-DDR-006): A4 uses 430 MPa nominal. EN 10025-2 allows 410 to 560 MPa for S275 bar of 3 to 100 mm, so the pin bar is bought with a mill certificate at 480 MPa or less and three pins per batch are release-tested; the certified range with 5 % test scatter gives a release of 5.77 to 7.47 kN (HPL-STM-001, S5 and S6).

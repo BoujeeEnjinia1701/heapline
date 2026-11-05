@@ -13,15 +13,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / ".kit"), str(ROOT / "cad" / "src")]
-from build123d import Compound  # noqa: E402
+from build123d import Axis, Compound  # noqa: E402
 from drawing import Sheet  # noqa: E402
 from build123d import Pos  # noqa: E402
 from model import PARAMS as P, capstan_parts, box_parts, packed_contents, packed_capstan, derived, CAPSTAN_KEYS  # noqa: E402
 
-DATE = "2026-10-03"
-REVS = [("P1", "Preliminary GA for TRL 3 (from cad/src/model.py)", DATE, "AC"),
-        ("P2", "HPL-DDR-002: design for construction", DATE, "AC")]
-REVS_BOX = REVS + [("P3", "HPL-DDR-003: search crate at every site, capstan crate at the host site", DATE, "AC")]
+DATE = "2026-11-03"
+REVS = [("P1", "Preliminary GA for TRL 3 (from cad/src/model.py)", "2026-10-03", "AC"),
+        ("P2", "HPL-DDR-002: design for construction", "2026-10-03", "AC")]
+REVS_BOX = REVS + [("P3", "HPL-DDR-003: search crate at every site, capstan crate at the host site", "2026-10-03", "AC")]
+REVS = REVS + [("P3", "Redrawn from the kit 1.9 D3 model (HPL-DDR-005)", DATE, "AC")]
+REVS_BOX = REVS_BOX + [("P4", "Redrawn from the kit 1.9 D3 model (HPL-DDR-005)", DATE, "AC")]
 
 
 def safe_project_views(part, workdir, line_weight=0.35):
@@ -35,7 +37,13 @@ def safe_project_views(part, workdir, line_weight=0.35):
     setups = {"front": ((c.X, c.Y - d, c.Z), (0, 0, 1)), "top": ((c.X, c.Y, c.Z + d), (0, 1, 0)),
               "right": ((c.X + d, c.Y, c.Z), (0, 0, 1)), "iso": ((c.X + d, c.Y - d, c.Z + d * 0.8), (0, 0, 1))}
     out = {}
+    from build123d import Vector
     for name, (origin, up) in setups.items():
+        # tilt the viewpoint 0.006 degrees off-axis so OpenCascade hidden-line removal does not stall on aligned edges
+        ctr = Vector(c.X, c.Y, c.Z)
+        v = Vector(*origin) - ctr
+        v = v.rotate(Axis((c.X, c.Y, c.Z), up), 0.006)
+        origin = (ctr.X + v.X, ctr.Y + v.Y, ctr.Z + v.Z)
         visible, hidden = part.project_to_viewport(origin, up, (c.X, c.Y, c.Z))
         ex = ExportSVG(unit=Unit.MM, line_weight=line_weight)
         ex.add_layer("Visible", line_color=0x111827)
@@ -59,7 +67,7 @@ def capstan_sheet():
     from model import bx
     shapes = [cap[k] if k != "stakes" else cap[k] & bx(-2000, 2000, -2000, 2000, 0, 400) for k in CAPSTAN_KEYS]
     views = safe_project_views(Compound(shapes), work)
-    s = Sheet(project="HeapLine", title="Hand capstan: general arrangement", dwg_no="HPL-DWG-001", rev="P2",
+    s = Sheet(project="HeapLine", title="Hand capstan: general arrangement", dwg_no="HPL-DWG-001", rev="P3",
               author="Amish Chadha", date=DATE, scale=1 / 20, theme="technical",
               material="Steel weldments, acetal bushes, bought rope and lifting gear per bom/bom.csv. PRELIMINARY, NOT FOR FABRICATION",
               revisions=REVS)
@@ -98,7 +106,7 @@ def box_sheet():
     Lb, Wb, Hb = P["box"]
     Lc, Wc, Hc = P["cap_box"]
     t = P["ply"]
-    s = Sheet(project="HeapLine", title="Search crate and capstan crate: packed arrangement", dwg_no="HPL-DWG-002", rev="P3",
+    s = Sheet(project="HeapLine", title="Search crate and capstan crate: packed arrangement", dwg_no="HPL-DWG-002", rev="P4",
               author="Amish Chadha", date=DATE, scale=1 / 25, theme="technical",
               material="Reused timber crates (or bought job boxes) of at least these sizes; contents per bom/bom.csv. PRELIMINARY, NOT FOR FABRICATION",
               revisions=REVS_BOX)

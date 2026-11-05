@@ -3,9 +3,9 @@ doc_id: HPL-DEC-001
 title: HeapLine design decisions register
 project: HeapLine
 doc_type: Design decisions register
-version: "0.3"
+version: "0.4"
 status: Draft
-date: '2026-10-04'
+date: '2026-11-03'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -21,6 +21,10 @@ revisions:
   date: '2026-10-04'
   author: Amish Chadha
   change: "Open decision 1 decided by Amish (round-3 decision 3A, HPL-DDR-004) and moved to Decisions made; no open decisions"
+- version: "0.4"
+  date: '2026-11-03'
+  author: Amish Chadha
+  change: "Kit 1.9.1 upgrade: open decision on the concept option (A and B within 10 %); two STEM fixes under the standing instruction of 2026-10-23"
 ---
 
 # HeapLine design decisions register
@@ -31,7 +35,13 @@ Every design decision still to be made, and every decision made, in one place. E
 
 ## Open decisions
 
-None. The four requirement decisions of 2026-10-03 and the siting limit for a shared capstan (decided 2026-10-04) are all under Decisions made.
+Proposed, awaiting Amish.
+
+| # | Decision | Options | Recommendation | Record |
+| --- | --- | --- | --- | --- |
+| 1 | Pull-set concept | A pumped friction capstan (current), B six-part rope tackle, C lever rope-grip puller | No pick between A and B (90 and 87 of 125, within 3.3 %); both go to Amish; A stays the design; C not recommended | HPL-DDR-005, HPL-OPT-001 |
+
+The four requirement decisions of 2026-10-03 and the siting limit for a shared capstan (decided 2026-10-04) are under Decisions made.
 
 ## To confirm when parts are bought
 
@@ -84,3 +94,5 @@ Value-engineering target: USD 1,800 (a hypothetical control target, not a limit)
 | 2026-10-03 | R8: the kit carried in two waves, the search kit first and the capstan set second (decision 22A) | Amish, same words | HPL-DDR-003 |
 | 2026-10-03 | R9: one capstan set shared by neighbouring sites, a reused crate or bought job box, PPE from the cooperative's stock; R9 restated to USD 850 per site search kit (decision 23C) | Amish, same words | HPL-DDR-003 |
 | 2026-10-04 | Open decision 1, R8 and R9 (3A): a shared capstan serves only sites within about 500 m walk of the host shed (capstan within about 15 min); farther sites keep their own capstan set or rely on the search kit alone; checked in the TRL 4 timed drills | Amish: "For round 3, I agree with all your proposed recommendations" | HPL-DDR-004 |
+| 2026-11-03 | STEM fix, option B: six rope handles | Amish's standing instruction of 2026-10-23 | HPL-DDR-006 |
+| 2026-11-03 | STEM fix, option C: 1.6 m lever | Amish's standing instruction of 2026-10-23 | HPL-DDR-006 |

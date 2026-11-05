@@ -1,6 +1,7 @@
 """HeapLine concept media (TRL 3, constructable design HPL-DDR-002 with HPL-DDR-003), generated from the parametric model.
 
-Run from the repo root:  python cad/src/concept_media.py
+Run from the repo root:  python cad/src/concept_media.py [web]
+With `web` it writes only media/model.glb and viewer.html (the web model stays under about 20 MB).
 Takes every component from cad/src/model.py in the display layout (the kit laid out beside the
 open site box) and renders the media set with .kit/concept.py: hero, exploded view with BOM
 callouts, concept blueprint, capstan energy flow, and the web model (model.glb with viewer.html).
@@ -22,47 +23,21 @@ from sheets import safe_project_views  # noqa: E402
 # The rope coils are tori whose B-spline edges the kit's SVG export cannot convert; project the
 # blueprint views edge by edge and skip any edge that fails (sheets.safe_project_views).
 drawing.project_views = lambda part, workdir, line_weight=0.35, center_lines=True: safe_project_views(part, workdir, line_weight)
-from model import PARAMS as P, build_components, CAP_AT, bx  # noqa: E402
+import model as M  # noqa: E402
+from model import PARAMS as P, CAP_AT, bx, by_key, EXPLODE, KEYNAME  # noqa: E402
 
-C = build_components(P, "display")
-
-STYLE = {  # key: (colour, exploded offset in mm)
-    "box_body": ("#0F766E", (0, 0, 0)),
-    "box_lid": ("#115E59", (0, 0, 0)),
-    "box_hardware": ("#374151", (0, 0, 0)),
-    "boards": ("#B45309", (0, 0, 0)),
-    "links": ("#374151", (0, 0, 250)),
-    "probes": ("#DC2626", (0, 0, 0)),
-    "shovels": ("#6B7280", (0, 0, 0)),
-    "frame": ("#1D4ED8", (0, 0, 0)),
-    "roller": ("#15803D", (-250, 0, 0)),
-    "roller_pin": ("#374151", (-250, 0, 0)),
-    "bushes": ("#F5F5F4", (0, 0, 600)),
-    "drum": ("#C2410C", (0, 0, 600)),
-    "drive_ratchet": ("#A16207", (0, 0, 1050)),
-    "shear_pin": ("#DC2626", (0, 0, 1150)),
-    "head": ("#111827", (0, 0, 1300)),
-    "hold_pawls": ("#7C3AED", (0, 0, 300)),
-    "drive_pawl": ("#7C3AED", (0, 0, 1300)),
-    "bars": ("#4B5563", (0, 0, 1300)),
-    "bar_pins": ("#111827", (0, 0, 1450)),
-    "keeper": ("#0E7490", (0, 0, 1600)),
-    "stakes": ("#57534E", (0, 0, 0)),
-    "rope": ("#E11D48", (0, 0, 0)),
-    "sling": ("#F97316", (0, 0, 0)),
-    "clamp_bars": ("#2563EB", (0, 0, 0)),
-    "clamp_bolts": ("#111827", (0, 0, 150)),
-    "sheet": ("#FACC15", (0, 0, 0)),
-    "straps": ("#1E3A8A", (0, 0, 150)),
-    "wands": ("#F97316", (0, 0, 0)),
-}
+# Every concept picture is made from the kit 1.9 D3 model of option A (cad/src/model.py): the parts are grouped by
+# component (key) so the callouts match the BOM lines; colours are those of the real materials.
+RAW = [p for p in M.components("A", "display") if p["kind"] != "context"]
+FIRST = {}
+for p_ in RAW:
+    FIRST.setdefault(p_["key"], p_)
 parts = []
-for key, comp in C.items():
-    color, off = STYLE[key]
-    shape = comp.shape
+for key, shape in by_key(RAW).items():
+    f = FIRST[key]
     if key == "stakes":                       # show only the parts above ground in the pictures
         shape = shape & bx(-20000, 20000, -20000, 20000, 0, 400)
-    parts.append(Part(comp.name, shape, color, comp.bom, off))
+    parts.append(Part(KEYNAME.get(key, f["name"]), shape, f["color"], f["bom"], EXPLODE.get(key, (0, 0, 0))))
 
 person = human_figure(1750.0, x=CAP_AT[0] + 1300.0, y=CAP_AT[1] + 700.0, z=0.0)
 context = [person]
@@ -72,14 +47,15 @@ flow = {"title": "capstan energy per metre of rope at 5 kN, kJ (HPL-CAL-001 esti
                    ("Sheeting or timber off the dig", "5 kN pull")],
         "losses": [(0, "Bush friction on the post", 0.35)]}
 
-outs = render_all(
+WEB_ONLY = len(sys.argv) > 1 and sys.argv[1] == "web"
+outs = {} if WEB_ONLY else render_all(
     parts, project="HeapLine", title="Dumpsite slide-rescue kit concept", dwg_no="HPL-DWG-010",
     key_figures=["Search crate 1.68 x 0.90 x 0.71 m, reused; stays at the shed",
                  "Six 3.07 m probes, 18 mm tips; 2.6 m deep with two people",
                  "Four 1.5 x 0.45 m crawl boards, 9.7 kg; 44 mm sinkage",
                  "Capstan: 5 kN with four people at 114 N each",
                  "Shear pin releases at about 6.4 kN; drum held by two pawls",
-                 "Two waves: search kit 21.5 kg each, capstan 21.7 kg each",
+                 "Two waves: search kit 21.5 kg each, capstan 21.4 kg each",
                  "USD 827 a site; shared capstan set USD 547 a group"],
     scale_figure=False, context=context, cut=False, web_model=False, flow=flow)
 

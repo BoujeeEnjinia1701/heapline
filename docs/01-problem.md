@@ -3,9 +3,9 @@ doc_id: HPL-PRB-001
 title: HeapLine problem statement
 project: HeapLine
 doc_type: Problem statement
-version: "0.2"
+version: "0.3"
 status: Draft
-date: '2026-10-03'
+date: '2026-11-03'
 author: Amish Chadha
 license: CERN-OHL-S-2.0
 revisions:
@@ -17,6 +17,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: TRL 2 and 3 update; first co-design candidate named (HPL-DDR-001); open questions answered or carried to the first trials; safety note
+- version: "0.3"
+  date: '2026-11-03'
+  author: Amish Chadha
+  change: "Kit 1.9.1 upgrade: users and needs and stakeholders tables added under Users and context (the user requirements in HPL-URS-001 come from them)"
 ---
 
 # HeapLine problem statement
@@ -31,12 +35,28 @@ The long-term answer is to engineer or close dumpsites. At Koshe, rehabilitation
 
 ## Users and context
 
-| User | Need | Context |
+*Table 1. Users and needs.*
+
+| User type | Goals and needs | Typical use scenario | Pain points and challenges |
+| --- | --- | --- | --- |
+| Waste pickers and their cooperatives | Search and dig for buried colleagues and neighbours in the first minutes without being buried themselves; know when to stop | A slide buries a work area in daylight; people fetch the kit from the shed, post a lookout, probe from boards, dig, and haul sheeting off a mark with the capstan | No tools, plan or protection from a second slide; sharp waste, gas and rain; no power or vehicle at the scene |
+| Neighbours living beside the dump | Join an organised search with a clear point to stop | Called by the alarm to carry, probe or haul under the lookout's direction | Untrained; fear and urgency push people past the stop signals |
+| Site operators and municipal staff | A low-cost emergency measure to stock, inspect and keep secure | Kit kept in a reused crate in a shed, inspected monthly, hosts one capstan set shared by nearby sites | Budget; heat and damp in storage; who keeps the key or the padlock code |
+| Fire, police and Red Cross responders | Arrive to a search that is organised, with burial points marked | Take over the search from the community crew | A search that has no lookout or marks; crowd on unstable ground |
+
+## Stakeholders
+
+*Table 2. Stakeholders.*
+
+| Stakeholder group | Role or interest | Engagement needed |
 | --- | --- | --- |
-| Waste pickers and their cooperatives | Search and dig for buried colleagues and neighbours in the first minutes, without being buried themselves | Open dumps and uncontrolled landfills, often with homes at the toe |
-| Neighbours living beside the dump | Join a search that has a lookout, a plan and a clear point to stop | Informal housing downslope of the waste |
-| Site operators and municipal staff | A low-cost emergency measure they can stock and inspect | Sites awaiting closure or rehabilitation |
-| Fire, police and Red Cross responders | Arrive to a search that is organised, with burial points marked | Handover from community search to formal rescue |
+| Waste pickers' cooperatives and associations | Users and owners of the kit; keep the monthly inspection log | Co-design partner; drills and trials at TRL 4 |
+| Red Cross branch, fire and rescue service | Take over a search; agree the stop rule and handover | Co-design review of the stop rule and drill card |
+| Site operators and municipal authorities | Host the shed and crate; permission for anchors and site access | Agree siting and the 500 m sharing limit |
+| Neighbouring households | Join searches; live below the slide path | Briefing and drill cards |
+| Local fabricators and steel stockholders | Build and mend the kit from open drawings | Review of the build plan for constructability |
+| Regulators and standards bodies | Whether a kit like this is regulated as machinery or rescue equipment | Review of HPL-REG-001 items marked "to assess" |
+| Open hardware community | Reuse, improve and share back under CERN-OHL-S-2.0 | Publish drawings early and keep the licence split |
 
 ## Operating environment
 

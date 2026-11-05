@@ -1,5 +1,42 @@
 # Review note: HeapLine
 
+## Session 2026-10-24: kit 1.9.1 upgrade
+
+Upgrade from kit 1.7 to 1.9.1 (stage P3, TRL stays 3), under the brief `ROLLOUT.md`. Authority: Amish's standing instruction of 2026-10-23 covers STEM-check fixes only. Everything else below is Proposed, awaiting Amish. Nothing was pushed.
+
+**What was added.**
+
+- Pipeline documents: STEM check `docs/01b-stem-check.md` (HPL-STM-001), concept options `docs/02a-concept-options.md` (HPL-OPT-001), user requirements `docs/03a-user-requirements.md` (UR-001 to UR-015), product requirements `docs/03-requirements.md` v0.6 (PR-001 to PR-015, each traced to a UR), traceability `docs/03b-traceability.md` (0 gaps), regulatory, feasibility, risk (hazard analysis and design FMEA), market (cited prices with dates) and plan documents (`docs/07-regulatory.md` to `docs/11-plan.md`), HPL-DDR-005 and HPL-DDR-006, and HPL-CAL-001 v0.3.
+- Calculations: `docs/04-calcs/stem_check.py`, `stem_results.csv` and `options_calc.py`.
+- Model: `cad/src/model.py` rebuilt to the kit 1.9 interface with every option at D3 (`hpl_parts.py`, `hpl_kit.py`, `hpl_capstan.py`, `opt_b.py`, `opt_c.py`); `python .kit/cad_check.py --export` passes at D3. Per-option part counts and mass from `cad/fidelity.json`: A 347 parts, 51 fasteners, 45 welds, 293.9 kg; B 236 parts, 42 fasteners, 12 welds, 186.0 kg; C 217 parts, 39 fasteners, 20 welds, 241.5 kg. STEP files (assembly per option, per-part STEP for A) and STL were regenerated; none is over 45 MB (largest 24.5 MB).
+- Drawings HPL-DWG-001 (Rev P3) and HPL-DWG-002 (Rev P4) and the other sheets were redrawn from the kit 1.9 model with the hidden-line viewpoint tilted 0.006 degrees off axis. The build plan pictures and concept media were regenerated from the same model.
+- `cad/src/product_model.py` with RENDER_VIEWS hero, studio, exploded and detail. The hero has a 1.75 m mannequin standing on the ground.
+- README in house structure, `project.yaml` (`stage: P3`, `stem_check`, `concept_options`, `concept_chosen: "open: A or B, no pick proposed"`, `trl_evidence`). The README's broken DOI badge (an error message pasted into the URL) was replaced with the badge for the DOI already in CITATION.cff.
+
+**STEM check.** 29 claims: 9 within known science, 20 plausible and to be confirmed, none fails. Fixes under the standing instruction (HPL-DDR-006): option B six rope handles; option C a 1.6 m lever; the shear pin bar bought with a mill certificate at 480 MPa or less and three pins per batch release-tested; probe push rule (one person while more than 1.5 m of tube is above the debris); drill-card digging guidance for gas in holes. Option A's design is unchanged. Independent review: `claude -p --model claude-opus-5-5` was given only the STEM check, CAL, PRS and `sizing.py`; its sixteen findings and their dispositions are in the STEM check, Independent review, Table 3. It reported the check as not yet sound before the fixes; the high findings (pin strength range, gas verdict, probe buckling) are fixed and six rows were downgraded from within to plausible.
+
+**Concept options.** Weighted scores of 125: A 90 (72.0 %), B 87 (69.6 %), C 64 (51.2 %). A and B are within 10 % (3.3 %), so both go to Amish with no pick; A stays the design (`concept_chosen: "open: A or B, no pick proposed"`). A geared drum winch was dropped before scoring because HPL-DDR-001 item 1 declined a winding drum; the lever rope-grip puller replaced it. Scores are the author's first-pass judgement, and the B and C cost, effort and reach figures are estimates.
+
+**Requirements not met.** None on paper. Not verifiable until TRL 4: PR-006 (storage life) and the plausible rows above. Two wording points from the independent review: PR-008 says the whole kit is carried by four people but the result needs seven in two waves (decision 22A); PR-011 asks for zero turns of run back, but a 24 tooth ratchet allows up to one tooth pitch.
+
+**BOM against budget.** Estimated USD 1,374 for the host site against the USD 1,800 target (`budget_usd` unchanged); each other site's search kit USD 827 against the restated USD 850. Shared capstan set USD 547.
+
+**Decisions awaiting Amish (Proposed).**
+
+1. Concept choice, A or B (HPL-DDR-005); no pick, A stays.
+2. Graft B's rope grab onto A as a second way to hold the load (not made).
+3. Whether to add a seventh stop signal or a detector for gas in holes (HPL-DDR-001 items 11 and 12 are Amish's; only drill-card digging guidance was added).
+4. Wording of PR-008 (seven people in two waves) and PR-011 (one tooth pitch of run back, or phased pawls).
+5. Appearance additions in the renders: a shed wall and a standing 1.75 m person in the hero view.
+
+**Safety concerns.** Pin release could reach 8.3 kN with unspecified bar (now a purchase specification); carbon dioxide and hydrogen sulfide in dug holes; pawl impact load on run back; a released long lever in option C; rope tackle and cam grip loads for B and C rest on estimated friction.
+
+**Checks run.** See the final report of this session for the results of the ordered checks. `.kit/options.py` was run only with `--export=DIR`; the scenes were exported to a scratch folder for the coordinator to render, so `media/options.png` is not in this commit. One earlier call of `options.py` without `--export` (with `--help`) was stopped before it wrote anything.
+
+**Kit bugs.** The verdict label in `.kit/stem_check.py` reads "Plausible, to confirm at TRL 3" although every such row here closes at TRL 4 or on purchase. `.kit/trace.py` reads any table with an "id" column as a PR table, so a second table needs another header name.
+
+**Worth saving to memory.** Declined options: winding drum with chain drive and the walk-round capstan (HPL-DDR-001 item 1). The standing instruction of 2026-10-23 covers STEM fixes only. `trace.py` parsing quirk above. `options.py` needs `--export=DIR` and cannot render here.
+
 ## Session 2026-10-03: TRL 3 (kit 1.7.0, /to-trl3 under Amish's pre-approvals, batch 2)
 
 Amish, 2026-10-03: "start with the first 14 repos from the list of 29 projects. I pre-approve the batch runs along with any recommendations you come up with. I also accept any cost overruns or variations from the assumed scope cost." For this batch: "Proceed with the remaining 15 scaffolds", under the same pre-approval. Every design choice and recommendation in this session is therefore recorded as decided, dated 2026-10-03, in `docs/06-design-decisions.md`. Requirements that are not met or at risk are not decided: each is posed below as a decision for Amish (Amish, 2026-10-03: "A simple statement doesn't add value - ensure you are identifying a state and posing it as a clear recommendation for me to decide on."). Kit 1.7.0 was installed from the kit source; `.kit/PHASE.yaml` kept as installed.

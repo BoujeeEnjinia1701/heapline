@@ -392,6 +392,11 @@ def _workshop_steps(n):
 def _site_steps(n):
     # site steps (deployed, shortened)
     C = build_components(P, "site")
+    from model import Comp
+    from build123d import Compound as _Cmp
+    C["boards"], C["links"] = C["board"], C["link"]
+    C["probes"] = Comp("Probes (6)", _Cmp([C[k].shape for k in ("probe_tip_section", "probe_mid_section", "probe_top_section", "probe_pins")]),
+                       None, "internal", "steel")
     X = context_shapes(P, "site")
     deb = [Part("Slide debris (site)", X["debris"], "#E7E5E4")]
     sp_ = lambda k, nm=None, e=(0, 0, 0): Part(nm or C[k].name, C[k].shape, COL.get(k, "#0F766E") if k not in ("boards", "links", "probes") else  # noqa: E731
